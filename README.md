@@ -13,27 +13,28 @@ ___
 3. **Student Dashboard**: 
  - Once logged in, students would be directed to a dashboard homepage. 
  - This page could include an overview of 
-    - Interviews available to them, 
-    - Progress,
-    - Overall score.
-4. **Schedule Interviews**: 
+    - Schedule Interviews
+    - Upcoming Interviews 
+    - Overall score - which can route to leaderboard
+    - Feedback
+    - Resources
+4. **Mock Interview Types**: 
+  - The app should provide various mock interview types that students can choose from
+    - Behavioral interviews, 
+    - Full-stack, Frontend and Backend interviews,
+    - DSA interviews
+5. **Schedule Interviews**: 
  - A feature that allows students to schedule mock interviews with interviewers. 
  - The students should be able to select 
     - the date and time, 
     - specify the interview type
     - choose the interviewer of their preference.
-5. **Mock Interview Types**: 
-  - The app should provide various mock interview types that students can choose from
-    - Behavioral interviews, 
-    - Full-stack interviews, 
-    - DSA interviews
-6. **Interview Feedback**: 
+6. **Integration with Calendar**: 
+  - The app should allow students to integrate their interview schedules with their calendars(can target Google Calendar), making it easier for them to manage their time and schedules.
+7. **Interview Feedback and Results**: 
  - Interviewers should be able to provide feedback on each interview, including notes on areas of strengths and weaknesses and suggestions for improvement.
  - The feedback should be automatically saved to the student's account for future reference.
-7. **Mock Interview Results**: 
-  - The app should record the results of each mock interview, including scores and feedback, which can be reviewed by students and administrators.
-8. **Integration with Calendar**: 
-  - The app should allow students to integrate their interview schedules with their calendars, making it easier for them to manage their time and schedules.
+ - The app should record the results of each mock interview, including scores and feedback, which can be reviewed by students and administrators.
  
 ---
 > ## Bonus - Nice to haves
