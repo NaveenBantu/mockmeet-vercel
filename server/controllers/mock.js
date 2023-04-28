@@ -22,5 +22,22 @@ export const deleteMock = async (req, res, next) => {
   // code here
 };
 
+// Get a particular Mock Interviews
+export const getMock = async (req, res, next) => {
+  try {
+    const mocks = await Mock.findById(req.params.id);
+    res.status(200).json(mocks);
+  } catch (err) {
+    next(err);
+  }
+};
+
 // Get all Mock Interviews
-export const getMocks = async (req, res, next) => {};
+export const getMocks = async (req, res, next) => {
+  try {
+    const mocks = await Mock.find();
+    res.status(200).json(mocks);
+  } catch (err) {
+    next(err);
+  }
+};

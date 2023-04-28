@@ -1,17 +1,27 @@
 import express from "express";
-import Mock from "../models/Mock.js";
+import {
+  createMock,
+  updateMock,
+  deleteMock,
+  getMock,
+  getMocks,
+} from "../controllers/mock.js";
 
 const router = express.Router();
 
 // CREATE
-router.post("/", async (req, res) => {
-  const newMock = new Mock(req.body);
-  try {
-    const savedMock = await newMock.save();
-    res.status(200).json(savedMock);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
+router.post("/", createMock);
+
+// UPDATE
+router.put("/:id", updateMock);
+
+// DELETE
+router.delete("/:id", deleteMock);
+
+// GET All Mocks
+router.get("/", getMocks);
+
+// GET a particular Mock
+router.get("/:id", getMock);
 
 export default router;
