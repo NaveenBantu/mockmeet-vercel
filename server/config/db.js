@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
+import "dotenv/config";
 
+// Getting mongodb connection URL from env. variable
 const connectionUrl = process.env.MONGO;
 
 mongoose
   .connect(connectionUrl, {
     useNewUrlParser: true,
-    useCreateIndex: true,
     useUnifiedTopology: true,
   })
   .then(() => {
