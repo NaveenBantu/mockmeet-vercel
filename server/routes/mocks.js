@@ -5,6 +5,7 @@ import {
   deleteMock,
   getMock,
   getMocks,
+  getMockInterviewers,
 } from "../controllers/mock.js";
 
 const router = express.Router();
@@ -23,5 +24,8 @@ router.get("/", getMocks);
 
 // GET a particular Mock
 router.get("/:id", getMock);
+
+// GET all interviewers
+router.get("/interviewer/:id", getMockInterviewers);
 
 export default router;
