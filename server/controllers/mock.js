@@ -1,3 +1,4 @@
+import Interviewer from "../models/Interviewer.js";
 import Mock from "../models/Mock.js";
 
 // Creating Mock Interview Type
@@ -37,6 +38,21 @@ export const getMocks = async (req, res, next) => {
   try {
     const mocks = await Mock.find();
     res.status(200).json(mocks);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Get Mock Interviewers
+export const getMockInterviewers = async (req, res, next) => {
+  try {
+    const mock = await Mock.findById(req.params.id);
+    const list = await Promise.all(
+      mock.interviewers.map((interviewer) => {
+        return Interviewer.findById(interviewer);
+      })
+    );
+    res.status(200).json(list);
   } catch (err) {
     next(err);
   }
