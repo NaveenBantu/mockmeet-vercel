@@ -9,6 +9,7 @@ import "dotenv/config";
 
 // Importing Routes
 import mocksRoute from "./routes/mocks.js";
+import interviewerRoute from "./routes/interviewers.js";
 
 // Importing database connection function
 import db from "./config/db.js";
@@ -32,6 +33,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/mocks", mocksRoute);
+app.use("/api/interviewers", interviewerRoute);
 
 // Error handling
 app.use((err, req, res, next) => {

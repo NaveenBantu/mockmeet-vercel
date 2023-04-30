@@ -10,7 +10,6 @@ export const createInterviewer = async (req, res, next) => {
     // Update Mock with the interviewer
     try {
       newInterviewer.interviewTypes.map(async ({ mockType }) => {
-        console.log(mockType);
         await Mock.findOneAndUpdate(
           { type: mockType },
           {
@@ -64,10 +63,8 @@ export const deleteInterviewer = async (req, res, next) => {
     const deletedInterviewer = await Interviewer.findByIdAndDelete(
       req.params.id
     );
-    console.log(deletedInterviewer);
     try {
       deletedInterviewer.interviewTypes.map(async ({ mockType }) => {
-        console.log(mockType);
         await Mock.findOneAndUpdate(
           { type: mockType },
           {
