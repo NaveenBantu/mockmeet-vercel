@@ -15,8 +15,6 @@ export const createMock = async (req, res, next) => {
 
 // Updating Mock interview
 export const updateMock = async (req, res, next) => {
-  // code here
-
   try {
     const updatedMock = await Mock.findByIdAndUpdate(
       req.params.id,
@@ -31,8 +29,6 @@ export const updateMock = async (req, res, next) => {
 
 // Deleting Mock interview
 export const deleteMock = async (req, res, next) => {
-  // code here
-
   try {
     const deletedMock = await Mock.findByIdAndDelete(req.params.id);
     res.status(200).json("Mock has been deleted.");
