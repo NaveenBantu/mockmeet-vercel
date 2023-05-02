@@ -1,12 +1,16 @@
-import introHero from "./assets/interview_illustration.svg";
-import logo from "./assets/logo.jpeg";
+import { Route, Routes } from "react-router";
+import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
+import MockTypes from "./pages/MockTypes";
 
 function App() {
   return (
     <>
-      <h1>MockMeet</h1>
-      <img src={logo} alt="MockMeet logo" />
-      <img src={introHero} alt="Intro Hero" />
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path="/mock-types" element={<MockTypes />}></Route>
+      </Routes>
     </>
   );
 }
