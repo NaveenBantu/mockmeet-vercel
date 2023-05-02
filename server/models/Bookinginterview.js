@@ -2,13 +2,13 @@ import mongoose from 'mongoose';
 
 const BookedInterview=new mongoose.Schema({
     mock_id:{
-        type:String,
-        required:true   
-      },
-      score:{
-        type:Number,
-        required:true   
-      },
+      type:String,
+      required:true   
+    },
+    score:{
+      type:Number,
+      required:true   
+    },
     student_id:{
       type:String,
       required:true   
@@ -25,8 +25,5 @@ const BookedInterview=new mongoose.Schema({
         type:Date,
         required:true
     }
-    
-    
-
 })
 export default Interviews = mongoose.model('Interviews',BookedInterview);
