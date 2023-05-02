@@ -1,16 +1,15 @@
-import { Route, Routes } from "react-router";
-import Dashboard from "./pages/Dashboard";
-import Home from "./pages/Home";
-import MockTypes from "./pages/MockTypes";
+import introHero from "./assets/interview_illustration.svg";
+import logo from "./assets/logo.jpeg";
+// import tailwindcss from 'tailwindcss';
+import Schedule from "./pages/Schedule/Schedule";
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
-        <Route path="/mock-types" element={<MockTypes />}></Route>
-      </Routes>
+      {/* <h1>MockMeet</h1>
+      <img src={logo} alt="MockMeet logo" />
+      <img src={introHero} alt="Intro Hero" /> */}
+      <Schedule />
     </>
   );
 }
