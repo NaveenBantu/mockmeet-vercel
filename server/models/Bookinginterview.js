@@ -31,7 +31,7 @@ const BookedInterview=new mongoose.Schema({
     bookingDate:{
         type:Date,
         required:true
-        
+
     }
 })
 export default Interviews = mongoose.model('Interviews',BookedInterview);
