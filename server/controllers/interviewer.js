@@ -7,16 +7,14 @@ export const createInterviewer = async (req, res, next) => {
 
   try {
     const savedInterviewer = await newInterviewer.save();
-    // Update Mock with the interviewer
+    // // Update Mock with the interviewer
     try {
-      newInterviewer.interviewTypes.map(async ({ mockType }) => {
-        await Mock.findOneAndUpdate(
-          { type: mockType },
-          {
-            $push: { interviewers: savedInterviewer._id },
-          }
-        );
-      });
+      await Mock.findOneAndUpdate(
+        { type: newInterviewer.mockType },
+        {
+          $push: { interviewers: savedInterviewer._id },
+        }
+      );
     } catch (err) {
       next(err);
     }
@@ -64,14 +62,12 @@ export const deleteInterviewer = async (req, res, next) => {
       req.params.id
     );
     try {
-      deletedInterviewer.interviewTypes.map(async ({ mockType }) => {
-        await Mock.findOneAndUpdate(
-          { type: mockType },
-          {
-            $pull: { interviewers: deletedInterviewer._id },
-          }
-        );
-      });
+      await Mock.findOneAndUpdate(
+        { type: deleteInterviewer.mockType },
+        {
+          $pull: { interviewers: deletedInterviewer._id },
+        }
+      );
     } catch (err) {
       next(err);
     }
