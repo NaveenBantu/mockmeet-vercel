@@ -6,6 +6,7 @@ import {
   ChatIcon,
   AttachmentIcon,
 } from "@chakra-ui/icons";
+
 import Header from "../../components/header/Header";
 import styles from "../Dashboard/styles.module.css"
 
