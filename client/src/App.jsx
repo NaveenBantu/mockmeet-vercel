@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import MockTypes from "./pages/MockTypes";
-import Header from "./components/header/Header";
+import Header from "./components/Header";
 
 function App() {
   return (

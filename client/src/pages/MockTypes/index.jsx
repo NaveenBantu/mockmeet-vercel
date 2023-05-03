@@ -1,7 +1,8 @@
 import React from "react";
 import Card from "../../components/Card";
 import styles from '../MockTypes/styles.modules.css'
-import Header from "../../components/header/Header";
+import Header from "../../components/Header";
+
 const MockTypes = () => {
   const mockTypes = [
     {

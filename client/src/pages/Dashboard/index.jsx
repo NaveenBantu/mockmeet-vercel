@@ -7,13 +7,13 @@ import {
   AttachmentIcon,
 } from "@chakra-ui/icons";
 
-import Header from "../../components/header/Header";
+import Header from "../../components/Header";
 import styles from "../Dashboard/styles.module.css"
 
 const Dashboard = () => {
   return (
     <>
-      <Header />
+      <Header/>
       <div className={styles.main}>
       <Card
         title="Schedule Interviews"
