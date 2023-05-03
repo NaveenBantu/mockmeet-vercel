@@ -38,22 +38,6 @@ export const updateInterviewer = async (req, res, next) => {
   }
 };
 
-export const updateInterviewerAvailability = async (req, res, next) => {
-  try {
-    await Interviewer.updateOne(
-      { "interviewTypes._id": req.params.id },
-      {
-        $push: {
-          "interviewTypes.$.availableDates": req.body.dates,
-        },
-      }
-    );
-    res.status(200).json("Interviewer availability has been updated.");
-  } catch (err) {
-    next(err);
-  }
-};
-
 // Deleting Interviewer
 export const deleteInterviewer = async (req, res, next) => {
   const mockId = req.params.mockid;
