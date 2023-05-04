@@ -41,7 +41,7 @@ const UpcomingInterviews = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       window.location.reload();
-    }, 60 * 1000);
+    }, 600000);
     return () => clearInterval(interval);
   }, []);
 
