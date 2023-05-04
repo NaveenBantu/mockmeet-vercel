@@ -6,7 +6,7 @@ import {
   ChatIcon,
   AttachmentIcon,
 } from "@chakra-ui/icons";
-import Header from "../../components/Header";
+import Header from "../../components/header/Header/";
 
 const Dashboard = () => {
   return (

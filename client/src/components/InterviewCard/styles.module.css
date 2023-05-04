@@ -1,0 +1,32 @@
+.container {
+  background-color: black;
+  width: 340px;
+  height: 110px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  margin: 20px;
+  justify-content: space-between;
+}
+
+.title {
+  margin-left: 24px;
+  font-family: Mulish;
+  font-size: 20px;
+  color: #faa621ff;
+}
+
+.details {
+  color: white;
+  font-size: 14px;
+  line-height: 0.6;
+}
+
+.join {
+  background-color: #faa621ff;
+  border: none;
+  width: 60px;
+  text-align: center;
+  cursor: pointer;
+}
