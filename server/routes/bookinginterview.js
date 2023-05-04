@@ -1,10 +1,10 @@
 import Express from "express";
 import {
-    createInterview,
-    updateInterviews,
-    deleteInterview,
-    getInterview,
-    getInterviews
+  createInterview,
+  updateInterview,
+  deleteInterview,
+  getInterview,
+  getInterviews,
 } from "../controllers/bookingInterview.js";
 
 const router = Express.Router();
@@ -13,7 +13,7 @@ const router = Express.Router();
 router.post("/", createInterview);
 
 //update interview
-router.put("/:id", updateInterviews);
+router.put("/:id", updateInterview);
 
 //DELETE Interviews
 router.delete("/:id", deleteInterview);
