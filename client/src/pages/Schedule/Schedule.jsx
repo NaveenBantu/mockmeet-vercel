@@ -4,12 +4,21 @@ import styles from './Schedule.module.css';
 import 'react-calendar/dist/Calendar.css';
 import { useEffect } from 'react';
 import axios from 'axios'
-// import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 const Schedule = () => {
-    const [date, setDate] = useState(new Date());
     const [post, setPost] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(null);
+
+    const availableDates = [
+        new Date("2021-01-01"),
+        new Date("2022-02-05"),
+        new Date("2023-03-10"),
+        new Date("2022-01-15"),
+        new Date("2023-04-20")
+    ];
     useEffect(() => {
-        axios.get("https://mockmeet.onrender.com/api/interviewers")
+        axios.get("https://mockmeet.onrender.com/api/mocks")
             .then(async (res) => {
                 let result = await res.data;
                 // let final=result.json();
@@ -31,6 +40,9 @@ const Schedule = () => {
     const onChange = date => {
         setDate(date);
     }
+    function handleClick() {
+        alert('Booked Successfully');
+      }
     return (
         <div>
             <center>
@@ -40,16 +52,34 @@ const Schedule = () => {
                 </div> */}
                 <div className={styles.dropdown_input}><br />
                     <select>
-                        <option value="">Select an interviewer</option>
-                        <option value="option1">Sravya</option>
-                        <option value="option2">Yashwant</option>
-                        <option value="option3">Sameera</option>
-                        <option value="option4">Ali</option>
-                        <option value="option5">Varshith</option>
+                        {post.map(item => (
+                            // <option key={item.id} value={item.id}>{item.interviewers.name}</option>
+                            // item.title === 'Full-Stack Interview' ? (
+                            // <select>
+                            // <option>
+                            
+                                item.interviewers.map((interviewer,i) => (
+                                    <option value={interviewer._id} key={i}>
+                                        {interviewer.name}
+                                    </option>
+                                ))
+                            
+                            // </option>
+                            // </select>
+                            //   ) : (
+                            //     <option key={item.id} value={item.id}>{item.title}</option>
+                            //   )
+                        ))}
                     </select>
                 </div><br />
                 <div>
-                    <Calendar onChange={onChange} value={date} />
+                    {/* <Calendar onChange={onChange} value={date} /> */}
+                    <DatePicker
+                        selected={selectedDate}
+                        onChange={date => setSelectedDate(date)}
+                        includeDates={availableDates}
+                        inline
+                    />
                 </div>
                 <p className='styles.text1'>Avaliable Times</p><br />
                 <div>
@@ -58,7 +88,7 @@ const Schedule = () => {
                 </div>
                 <button className={styles.button}>14:00</button> &nbsp;&nbsp;&nbsp;
                 <button className={styles.button}>18:00</button><br /><br />
-                <button className={styles.button1}>Book Interview Slot</button>
+                <button className={styles.button1} onClick={handleClick}>Book Interview Slot</button>
             </center>
         </div>
     );
