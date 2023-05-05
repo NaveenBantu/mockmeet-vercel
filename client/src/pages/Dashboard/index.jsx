@@ -6,7 +6,7 @@ import {
   ChatIcon,
   AttachmentIcon,
 } from "@chakra-ui/icons";
-import Header from "../../components/Header";
+import Header from "../../components/header/Header";
 
 const Dashboard = () => {
   return (
@@ -18,7 +18,7 @@ const Dashboard = () => {
         link="/mock-types"
       />
       <Card title="Upcoming Interviews" icon={CalendarIcon} />
-      <Card title="Leaderboard" icon={SunIcon} />
+      <Card title="Leaderboard" icon={SunIcon} link='/leaderboard' />
       <Card title="Feedback" icon={ChatIcon} />
       <Card title="Resources" icon={AttachmentIcon} />
     </>
