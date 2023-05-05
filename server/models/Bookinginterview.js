@@ -29,6 +29,10 @@ const BookedInterview = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  feedback: {
+    type: String,
+    required: true,
+  },
 });
 
 export default mongoose.model("Interview", BookedInterview);
