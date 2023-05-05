@@ -40,8 +40,11 @@ export const deleteMock = async (req, res, next) => {
 // Get a particular Mock Interviews
 export const getMock = async (req, res, next) => {
   try {
-    const mocks = await Mock.findById(req.params.id);
-    res.status(200).json(mocks);
+    await Mock.findById(req.params.id)
+      .populate("interviewers")
+      .then((mock) => {
+        res.status(200).json(mock);
+      });
   } catch (err) {
     next(err);
   }
