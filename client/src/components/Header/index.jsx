@@ -14,7 +14,7 @@ function Header() {
   return (
     <div className={styles.container}>
       <div className={styles.tabbar}>
-        <label onClick={handleChange}><GridViewIcon /></label>
+        <label onClick={handleChange}><GridViewIcon /><label>Dashboard</label></label>
       </div>
       <div className={styles.text}>
         MockMeet
