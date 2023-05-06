@@ -1,47 +1,47 @@
-
 .container {
-    position: absolute; 
-    top: 0px; 
-    left: 0px; 
-    width: 410px; 
-    height: 84px; 
-    background: #FBBB52FF; 
-    border-radius: 0px; 
-  }
-  .text {
-    position: absolute; 
-    width: 100%;
-    top: 40px; 
-    left: 126px; 
-    font-family: Sora; 
-    font-size: 24px; 
-    line-height: 36px; 
-    color: #171A1FFF; 
-    font-weight: 1000;
-  }
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 84px;
+  background: #faa621;
+  border-radius: 0px;
+  display: flex;
+  justify-content: space-between;
+}
+.text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  top: 40px;
+  left: 126px;
+  font-family: Mulish;
+  font-size: 24px;
+  line-height: 36px;
+  color: #171a1fff;
+  font-weight: 1000;
+}
 
 .icon {
-   position: absolute;
-   top: 0px; 
-   left: 344px; 
-   width: 28px; 
-   height: 28px;
-    display: flex;
-   align-items: center;
-   justify-content: center;
-   font-size: 170px;
- }
+  /* position: absolute; */
+  /* top: 0px;
+  left: 344px;
+  width: 28px;
+  height: 28px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-size: 170px;
+}
 
- 
 .tabbar {
-  position: relative;
-  top: 34px;
-  left: 0px;
-  width: 98px;
-  height: 48px;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
+  padding: 1rem;
   font-family: Mulish;
   font-size: 10px;
   line-height: 16px;
@@ -51,13 +51,12 @@
 
 .tabbar label {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: 4px;
 }
 
-.tabbar:hover{
-    color:black;
+.tabbar:hover {
+  color: black;
 }
-  

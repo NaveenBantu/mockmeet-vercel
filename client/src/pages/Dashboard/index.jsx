@@ -7,24 +7,21 @@ import {
   AttachmentIcon,
 } from "@chakra-ui/icons";
 
-import Header from "../../components/Header";
-import styles from "../Dashboard/styles.module.css"
-
 const Dashboard = () => {
   return (
     <>
-      <Header/>
-      <div className={styles.main}>
-      <Card
-        title="Schedule Interviews"
-        icon={CalendarIcon}
-        link="/mock-types"
-      />
-      <Card title="Upcoming Interviews" icon={CalendarIcon} />
-      <Card title="Leaderboard" icon={SunIcon} />
-      <Card title="Feedback" icon={ChatIcon} link="/feedbacks"/>
-      <Card title="Resources" icon={AttachmentIcon} />
-    </div>
+      <center>
+        <h1>Dashboard</h1>
+        <Card
+          title="Schedule Interviews"
+          icon={CalendarIcon}
+          link="/mock-types"
+        />
+        <Card title="Upcoming Interviews" icon={CalendarIcon} />
+        <Card title="Leaderboard" icon={SunIcon} />
+        <Card title="Feedback" icon={ChatIcon} link="/feedbacks" />
+        <Card title="Resources" icon={AttachmentIcon} />
+      </center>
     </>
   );
 };
