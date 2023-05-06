@@ -38,12 +38,12 @@ const UpcomingInterviews = () => {
     },
   ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      window.location.reload();
-    }, 600000);
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     window.location.reload();
+  //   }, 600000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <div>
