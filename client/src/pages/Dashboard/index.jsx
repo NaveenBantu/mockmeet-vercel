@@ -22,7 +22,7 @@ const Dashboard = () => {
       />
       <Card title="Upcoming Interviews" icon={CalendarIcon} />
       <Card title="Leaderboard" icon={SunIcon} />
-      <Card title="Feedback" icon={ChatIcon} />
+      <Card title="Feedback" icon={ChatIcon} link="/feedbacks"/>
       <Card title="Resources" icon={AttachmentIcon} />
     </div>
     </>

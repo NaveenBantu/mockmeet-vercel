@@ -2,47 +2,26 @@ import React from "react";
 import Card from "../../components/Card";
 import styles from '../MockTypes/styles.modules.css'
 import Header from "../../components/Header";
+import useFetch from "../../hooks/useFetch";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const MockTypes = () => {
-  const mockTypes = [
-    {
-      _id: "1",
-      title: "Full-stack Interview",
-      type: "full-stack",
-      score: 50,
-      interviewers: ["644d9b0db60b99bb257dbe5d", "644da18cb2bbb460d2b49d9e"],
-    },
-    {
-      _id: "2",
-      title: "Frontend Interview",
-      type: "frontend",
-      score: 25,
-      interviewers: ["644da18cb2bbb460d2b49d9e"],
-    },
-    {
-      _id: "3",
-      title: "Backend Interview",
-      type: "backend",
-      score: 25,
-      interviewers: ["644d9b0db60b99bb257dbe5d", "644da18cb2bbb460d2b49d9e"],
-    },
-    {
-      _id: "4",
-      title: "DSA Interview",
-      type: "dsa",
-      score: 40,
-      interviewers: ["644da18cb2bbb460d2b49d9e"],
-    },
-  ];
+  const { data, loading, error } = useFetch("http://localhost:5050/api/mocks");
 
   return (
-    <div className={styles.main}>
-      <Header/>
-      <h1>MockTypes</h1>
-      {mockTypes.map((type) => {
-        return <Card title={type.title} />;
-      })}
-    </div>
+    <center>
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <Header/>
+          <h1>MockTypes</h1>
+          {data.map((type) => {
+            return <Card title={type.title} link={`/schedule/${type._id}`} />;
+          })}
+        </>
+      )}
+    </center>
   );
 };
 
