@@ -1,29 +1,25 @@
 import React from "react";
 import styles from "../Header/styles.module.css";
-import GridViewIcon from "../../../node_modules/@mui/icons-material/GridView";
-// import GridViewIcon from "@mui/icons-material/GridView";
-// import PersonIcon from "@mui/icons-material/Person";
-import PersonIcon from "../../../node_modules/@mui/icons-material/Person";
+// import GridViewIcon from "../../../node_modules/@mui/icons-material/GridView";
+import GridViewIcon from "@mui/icons-material/GridView";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
 
-function Header() {
+function Header({ user }) {
   const navigate = useNavigate();
+  const { isSignedIn } = useUser();
 
   function handleChange() {
-    navigate("/Dashboard");
+    navigate("/");
   }
+
   return (
     <div className={styles.container}>
       <div className={styles.tabbar}>
-        {/* <label onClick={handleChange}> */}
-        <GridViewIcon onClick={handleChange} />
-        {/* <label>Dashboard</label> */}
-        {/* </label> */}
+        {isSignedIn && <GridViewIcon onClick={handleChange} />}
       </div>
       <div className={styles.text}>MockMeet</div>
-      <div className={styles.icon}>
-        <PersonIcon />
-      </div>
+      <div className={styles.icon}>{user}</div>
     </div>
   );
 }

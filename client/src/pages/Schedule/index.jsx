@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./styles.module.css";
-
 import { Select } from "@chakra-ui/select";
-
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import useFetch from "../../hooks/useFetch";
 import { parseISO } from "date-fns";
 
 import LoadingSpinner from "../../components/LoadingSpinner";
+import { useUser } from "@clerk/clerk-react";
 
 const Schedule = () => {
   const [date, setDate] = useState(new Date());
@@ -17,6 +16,15 @@ const Schedule = () => {
 
   const { mockId } = useParams();
 
+  const { isLoaded, isSignedIn } = useUser();
+  const navigate = useNavigate();
+
+  // In case the user signs out while on the page.
+  if (!isLoaded || !isSignedIn) {
+    navigate("/sign-in");
+  }
+
+  // Fetching the mocks
   const { data, loading, error } = useFetch(
     `http://localhost:5050/api/mocks/${mockId}`
   );

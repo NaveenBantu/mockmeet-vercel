@@ -2,9 +2,18 @@ import React from "react";
 import Card from "../../components/Card";
 import useFetch from "../../hooks/useFetch";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import { useAuth, useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 const MockTypes = () => {
   const { data, loading, error } = useFetch("http://localhost:5050/api/mocks");
+
+  const { isLoaded, isSignedIn } = useAuth();
+  const navigate = useNavigate();
+
+  if (!isLoaded || !isSignedIn) {
+    navigate("/sign-in");
+  }
 
   return (
     <center>
