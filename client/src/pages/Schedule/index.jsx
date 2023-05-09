@@ -26,7 +26,7 @@ const Schedule = () => {
 
   // Fetching the mocks
   const { data, loading, error } = useFetch(
-    `http://localhost:5050/api/mocks/${mockId}`
+    `${import.meta.env.VITE_REACT_API_URL}/mocks/${mockId}`
   );
 
   const { interviewers } = data;

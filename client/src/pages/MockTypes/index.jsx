@@ -6,7 +6,9 @@ import { useAuth, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 
 const MockTypes = () => {
-  const { data, loading, error } = useFetch("http://localhost:5050/api/mocks");
+  const { data, loading, error } = useFetch(
+    `${import.meta.env.VITE_REACT_API_URL}/mocks`
+  );
 
   const { isLoaded, isSignedIn } = useAuth();
   const navigate = useNavigate();
