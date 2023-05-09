@@ -1,5 +1,6 @@
 // This function handles CRUD of User data.
 import User from "../models/User.js";
+import Interview from "../models/Bookinginterview.js";
 
 export const createUser = async (req, res, next) => {
   const newUser = new User(req.body);
@@ -56,3 +57,16 @@ export const getUsers = async (req, res, next) => {
     next(err);
   }
 };
+
+// Get the Interviews list associated for a user by student_id from BookingInterview model
+
+export const getUserInterviews = async (req, res, next) => {
+  try {
+    const userInterviews = await Interview.find({
+      student_id: req.params.id,
+    });
+    res.status(200).json(userInterviews);
+  } catch (err) {
+    next(err);
+  }
+}

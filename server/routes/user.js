@@ -5,6 +5,7 @@ import {
   deleteUser,
   getUser,
   getUsers,
+  getUserInterviews,
 } from "../controllers/user.js";
 
 const router = Express.Router();
@@ -23,4 +24,8 @@ router.get("/", getUsers);
 
 //GEt particular User
 router.get("/:id", getUser);
+
+//Get all interviews of a particular user
+router.get("/:id/interviews", getUserInterviews);
+
 export default router;
