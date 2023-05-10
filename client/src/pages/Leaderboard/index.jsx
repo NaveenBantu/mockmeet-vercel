@@ -1,7 +1,7 @@
-import React,{useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from "../Leaderboard/styles.module.css"
-import {Center, Table, TableContainer, Thead, Th, Tr, Td, Tbody, Stat, StatGroup, StatLabel, StatNumber, StatHelpText, StatArrow } from "@chakra-ui/react";
-
+import { Center, Table, TableContainer, Thead, Th, Tr, Td, Tbody, Stat, StatGroup, StatLabel, StatNumber, StatHelpText, StatArrow } from "@chakra-ui/react";
+import Header from '../../components/header/Header.jsx';
 
 
 const data = {
@@ -41,51 +41,55 @@ const Leaderboard = () => {
     const isRankIncreased = rankDiff < 0;
 
     return (
-        <Center>
-            <div className={styles.container}>
-                <div className={styles.card}>
-                    <div>
-                        <span className={styles.text}>Score : </span>
-                        <span className={styles.score}>{data.Userscore}</span>
-                    </div>
-                    <div >
-                        <StatGroup>
-                            <Stat className='styles.rankContainer'>
-                                <StatLabel className={styles.rank}>Rank : </StatLabel>
-                                <StatNumber className={styles.rankDisplay} >{data.UserRank}</StatNumber>
-                                <StatHelpText >
-                                    <StatArrow className={styles.difference} type={isRankIncreased ? "increase" : "decrease"} />
-                                    <span className={styles.diff}>{Math.abs(rankDiff)}</span>
-                                </StatHelpText>
-                            </Stat>
-                        </StatGroup>
+        <div>
+            <Header />
+            <Center>
+                <div className={styles.container}>
+                    <h1>Performance</h1>
+                    <div className={styles.card}>
+                        <div>
+                            <span className={styles.text}>Score : </span>
+                            <span className={styles.score}>{data.Userscore}</span>
+                        </div>
+                        <div >
+                            <StatGroup>
+                                <Stat className='styles.rankContainer'>
+                                    <StatLabel className={styles.rank}>Rank : </StatLabel>
+                                    <StatNumber className={styles.rankDisplay} >{data.UserRank}</StatNumber>
+                                    <StatHelpText >
+                                        <StatArrow className={styles.difference} type={isRankIncreased ? "increase" : "decrease"} />
+                                        <span className={styles.diff}>{Math.abs(rankDiff)}</span>
+                                    </StatHelpText>
+                                </Stat>
+                            </StatGroup>
+
+                        </div>
 
                     </div>
-
-                </div>
-                <div className={styles.table}>
-                    <TableContainer>
-                        <Table striped="true" colorScheme='teal'>
-                            <Thead>
-                                <Tr>
-                                    <Th>Student</Th>
-                                    <Th>Score</Th>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
-                                {data.allScores.map((student, index) => (
-                                    <Tr key={student.id}>
-                                        <Td>{student.name}</Td>
-                                        <Td>{student.score}</Td>
+                    <div className={styles.table}>
+                        <TableContainer>
+                            <Table striped="true" colorScheme='teal'>
+                                <Thead>
+                                    <Tr>
+                                        <Th>Student</Th>
+                                        <Th>Score</Th>
                                     </Tr>
-                                ))}
-                            </Tbody>
-                        </Table>
-                    </TableContainer>
+                                </Thead>
+                                <Tbody>
+                                    {data.allScores.map((student, index) => (
+                                        <Tr key={student.id}>
+                                            <Td>{student.name}</Td>
+                                            <Td>{student.score}</Td>
+                                        </Tr>
+                                    ))}
+                                </Tbody>
+                            </Table>
+                        </TableContainer>
 
+                    </div>
                 </div>
-            </div>
-        </Center>
+            </Center>
+        </div>
     )
 }
 
