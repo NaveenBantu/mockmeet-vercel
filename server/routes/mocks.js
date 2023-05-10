@@ -6,6 +6,10 @@ import {
   getMock,
   getMocks,
 } from "../controllers/mock.js";
+import {
+  ClerkExpressRequireAuth,
+  ClerkExpressWithAuth,
+} from "@clerk/clerk-sdk-node";
 
 const router = express.Router();
 
