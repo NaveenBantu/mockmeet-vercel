@@ -1,6 +1,6 @@
 import { Route, Routes, useNavigate } from "react-router";
 import Dashboard from "./pages/Dashboard";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import MockTypes from "./pages/MockTypes";
 import Header from "./components/Header";
 import Feedback from "./pages/Feedback";
@@ -10,7 +10,10 @@ import {
   ClerkProvider,
   SignedIn,
   SignedOut,
+<<<<<<< Updated upstream
   RedirectToSignIn,
+=======
+>>>>>>> Stashed changes
   SignIn,
   SignUp,
   UserButton,
@@ -48,7 +51,15 @@ function App() {
           />
           <Route
             path="/sign-up/*"
+<<<<<<< Updated upstream
             element={<SignUp routing="path" path="/sign-up" />}
+=======
+            element={
+              <center>
+                <SignUp routing="path" path="/sign-up" />
+              </center>
+            }
+>>>>>>> Stashed changes
           />
           <Route
             path="/"

@@ -8,15 +8,22 @@ import useFetch from "../../hooks/useFetch";
 import { parseISO } from "date-fns";
 
 import LoadingSpinner from "../../components/LoadingSpinner";
-import { useUser } from "@clerk/clerk-react";
+import { useAuth, useUser } from "@clerk/clerk-react";
 
 const Schedule = () => {
   const [date, setDate] = useState(new Date());
+  const [interviewData, setInterviewData] = useState({
+    mock_id: "",
+    total_score: "",
+    student_id: "",
+    interviewer_id: "",
+    bookingDate: "",
+  });
   const [interviewer, setInterviewer] = useState("");
 
   const { mockId } = useParams();
 
-  const { isLoaded, isSignedIn } = useUser();
+  const { isLoaded, isSignedIn, userId } = useAuth();
   const navigate = useNavigate();
 
   // In case the user signs out while on the page.
@@ -29,16 +36,42 @@ const Schedule = () => {
     `${import.meta.env.VITE_REACT_API_URL}/mocks/${mockId}`
   );
 
-  const { interviewers } = data;
+  // Posting the data to Interviews
+  const { postRequest: postInterviewRequest, loading: postLoading } = useFetch(
+    `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews`
+  );
+
+  const { interviewers, score } = data;
 
   const handleDateChange = (date) => {
+    // Setting the date on change of the date picker
     setDate(date);
+
+    // Setting form data
+    setInterviewData((prevInterviewData) => ({
+      ...prevInterviewData,
+      bookingDate: date,
+    }));
   };
 
   const handleInterviewerChange = (event) => {
-    setInterviewer(
-      interviewers.find((data) => data.name === event.target.value)
-    );
+    const { value } = event.target;
+    const interviewer = interviewers.find((data) => data.name === value);
+
+    // Setting internal state to get the available dates
+    setInterviewer(interviewer);
+
+    // Setting the first available date of the interviewer in the Calendar
+    setDate(parseISO(interviewer?.availableDates[0]));
+
+    // Setting the form data for interviewer
+    setInterviewData((prevInterviewData) => ({
+      ...prevInterviewData,
+      interviewer_id: interviewer._id,
+      student_id: userId,
+      total_score: score,
+      mock_id: mockId,
+    }));
   };
 
   const getAvailableDates = () => {
@@ -47,37 +80,54 @@ const Schedule = () => {
     return parsedDates;
   };
 
+  const handleSubmit = (e) => {
+    // prevent the default form submit
+    e.preventDefault();
+
+    // submitting the form
+    console.log(interviewData);
+
+    postInterviewRequest(interviewData);
+
+    navigate("/");
+  };
+
   return (
     <center>
-      {loading ? (
+      {loading || postLoading ? (
         <LoadingSpinner />
       ) : (
         <>
-          <h3 className={styles.text}>Schedule {data?.title}</h3>
-          <Select
-            placeholder="Select Interviewer"
-            size="lg"
-            value={interviewer?.name}
-            onChange={handleInterviewerChange}
-          >
-            {interviewers?.map((interviewer) => (
-              <option key={interviewer?._id} value={interviewer?.name}>
-                {interviewer?.name}
-              </option>
-            ))}
-          </Select>
-          <div className="date-picker-container">
-            <DatePicker
-              selected={date}
-              onChange={handleDateChange}
-              includeDates={getAvailableDates(interviewer)}
-              showTimeSelect
-              dateFormat="MMMM d, yyyy h:mm aa"
-              placeholderText="Select a date"
-              inline
-            />
-          </div>
-          <button className={styles.button1}>Book Interview Slot</button>
+          <form onSubmit={handleSubmit}>
+            <h3 className={styles.text}>Schedule {data?.title}</h3>
+            <Select
+              placeholder="Select Interviewer"
+              size="lg"
+              value={interviewer?.name}
+              onChange={handleInterviewerChange}
+            >
+              {interviewers?.map((interviewer) => (
+                <option key={interviewer?._id} value={interviewer?.name}>
+                  {interviewer?.name}
+                </option>
+              ))}
+            </Select>
+            <div className="date-picker-container">
+              <DatePicker
+                selected={date}
+                onChange={handleDateChange}
+                includeDates={getAvailableDates(interviewer)}
+                includeTimes={getAvailableDates(interviewer)}
+                showTimeSelect
+                dateFormat="MMMM d, yyyy h:mm aa"
+                placeholderText="Select a date"
+                inline
+              />
+            </div>
+            <button type="submit" className={styles.button1}>
+              Book Interview Slot
+            </button>
+          </form>
         </>
       )}
     </center>

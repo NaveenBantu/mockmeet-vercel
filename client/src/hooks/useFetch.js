@@ -31,7 +31,20 @@ const useFetch = (url) => {
     setLoading(false);
   };
 
-  return { data, loading, error, reFetch };
+  const postRequest = async (postData) => {
+    setLoading(true);
+
+    try {
+      const response = await axios.post(url, postData);
+      setData(response.data);
+    } catch (error) {
+      setError(error);
+    }
+
+    setLoading(false);
+  };
+
+  return { data, loading, error, reFetch, postRequest };
 };
 
 export default useFetch;
