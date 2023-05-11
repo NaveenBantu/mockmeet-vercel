@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Route, Routes, useNavigate } from "react-router";
 import Dashboard from "./pages/Dashboard";
 // import Home from "./pages/Home";
 import MockTypes from "./pages/MockTypes";
@@ -16,6 +16,15 @@ import {
 } from "@clerk/clerk-react";
 
 function App() {
+  const navigate = useNavigate();
+
+  const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
+  console.log(clerkPubKey);
+  if (!clerkPubKey) {
+    throw new Error("Missing Publishable Key");
+  }
+
+  const navigte = useNavigate();
   return (
     <>
       <ClerkProvider
