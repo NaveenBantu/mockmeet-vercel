@@ -6,12 +6,20 @@ import {
   ChatIcon,
   AttachmentIcon,
 } from "@chakra-ui/icons";
+import { useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const { user, isLoaded, isSignedIn } = useUser();
+  const navigate = useNavigate();
+
+  if (!isLoaded || !isSignedIn) {
+    navigate("/sign-in");
+  }
   return (
     <>
       <center>
-        <h1>Dashboard</h1>
+        <h2>Welcome {user?.firstName}</h2>
         <Card
           title="Schedule Interviews"
           icon={CalendarIcon}

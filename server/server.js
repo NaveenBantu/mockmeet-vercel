@@ -14,6 +14,11 @@ import BookinginterviewRoute from "./routes/bookinginterview.js";
 // Importing database connection function
 import db from "./config/db.js";
 
+import clerk from "@clerk/clerk-sdk-node";
+
+const userList = await clerk.users.getUserList();
+// console.log(userList);
+
 // Inititalizing App
 const app = express();
 
@@ -34,7 +39,7 @@ app.use(express.json());
 // Routes
 app.use("/api/mocks", mocksRoute);
 app.use("/api/interviewers", interviewerRoute);
-app.use("/api/bookinginterviews", BookinginterviewRoute)
+app.use("/api/bookinginterviews", BookinginterviewRoute);
 
 // Error handling
 app.use((err, req, res, next) => {
