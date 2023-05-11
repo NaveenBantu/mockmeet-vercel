@@ -113,16 +113,20 @@ const Schedule = () => {
               ))}
             </Select>
             <div className="date-picker-container">
-              <DatePicker
-                selected={date}
-                onChange={handleDateChange}
-                includeDates={getAvailableDates(interviewer)}
-                includeTimes={getAvailableDates(interviewer)}
-                showTimeSelect
-                dateFormat="MMMM d, yyyy h:mm aa"
-                placeholderText="Select a date"
-                inline
-              />
+              {getAvailableDates(interviewer)?.length > 0 ? (
+                <DatePicker
+                  selected={date}
+                  onChange={handleDateChange}
+                  includeDates={getAvailableDates(interviewer)}
+                  includeTimes={getAvailableDates(interviewer)}
+                  showTimeSelect
+                  dateFormat="MMMM d, yyyy h:mm aa"
+                  placeholderText="Select a date"
+                  inline
+                />
+              ) : (
+                <p>No Available dates</p>
+              )}
             </div>
             <button type="submit" className={styles.button1}>
               Book Interview Slot

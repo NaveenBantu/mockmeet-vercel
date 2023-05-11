@@ -35,4 +35,4 @@ const BookedInterview = new mongoose.Schema({
     default: "",
   },
 });
-export default Interviews = mongoose.model("Interviews", BookedInterview);
+export default mongoose.model("Interviews", BookedInterview);
