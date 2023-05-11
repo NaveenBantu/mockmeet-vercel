@@ -155,9 +155,12 @@ export const getUsers = async (req, res, next) => {
 
 export const getUserInterviews = async (req, res, next) => {
   try {
-    const userInterviews = await Interview.find({
-      student_id: req.params.id,
-    });
+    let queryObj = {};
+    if (req.query.iscompleted) {
+      queryObj.iscompleted = req.query.iscompleted;
+    }
+    queryObj.student_id = req.params.id;
+    const userInterviews = await Interview.find(queryObj);
     res.status(200).json(userInterviews);
   } catch (err) {
     next(err);
