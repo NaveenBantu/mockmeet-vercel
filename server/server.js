@@ -16,6 +16,11 @@ import UserRoute from "./routes/user.js";
 // Importing database connection function
 import db from "./config/db.js";
 
+import clerk from "@clerk/clerk-sdk-node";
+
+const userList = await clerk.users.getUserList();
+// console.log(userList);
+
 // Inititalizing App
 const app = express();
 
