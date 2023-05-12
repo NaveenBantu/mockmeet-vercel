@@ -13,23 +13,23 @@ import {
   SignIn,
   SignUp,
   UserButton,
+  useUser,
 } from "@clerk/clerk-react";
+import Availability from "./pages/Availability";
 
 function App() {
   const navigate = useNavigate();
 
   const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
-  console.log(clerkPubKey);
   if (!clerkPubKey) {
     throw new Error("Missing Publishable Key");
   }
 
-  const navigte = useNavigate();
   return (
     <>
       <ClerkProvider
         publishableKey={clerkPubKey}
-        navigate={(to) => navigte(to)}
+        navigate={(to) => navigate(to)}
       >
         <Header user={<UserButton />} />
         <Routes>
@@ -58,6 +58,7 @@ function App() {
             element={
               <>
                 {/* <SignedIn> */}
+                {}
                 <Dashboard />
                 {/* </SignedIn> */}
                 {/* <SignedOut>
@@ -69,6 +70,8 @@ function App() {
           <Route path="/mock-types" element={<MockTypes />}></Route>
           <Route path="/schedule/:mockId" element={<Schedule />}></Route>
           <Route path="/feedbacks" element={<Feedback />}></Route>
+          {/* <Route path="/admin" element={<AdminDashboard />}></Route> */}
+          <Route path="/availability" element={<Availability />}></Route>
         </Routes>
       </ClerkProvider>
     </>
