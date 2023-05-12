@@ -19,7 +19,7 @@ router.put("/:id", updateInterview);
 router.delete("/:id", deleteInterview);
 
 //GET all Interviews
-router.get("/", getInterviews);
+router.get("/:userID", getInterviews);
 
 //GEt particular interview
 router.get("/:id", getInterview);
