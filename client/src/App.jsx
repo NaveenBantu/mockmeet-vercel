@@ -5,6 +5,8 @@ import MockTypes from "./pages/MockTypes";
 import Header from "./components/Header";
 import Feedback from "./pages/Feedback";
 import Schedule from "./pages/Schedule";
+import Resources from "./pages/resources/Resources";
+import Resource from "./pages/resources/Resource";
 
 import {
   ClerkProvider,
@@ -24,12 +26,11 @@ function App() {
     throw new Error("Missing Publishable Key");
   }
 
-  const navigte = useNavigate();
   return (
     <>
       <ClerkProvider
         publishableKey={clerkPubKey}
-        navigate={(to) => navigte(to)}
+        navigate={(to) => navigate(to)}
       >
         <Header user={<UserButton />} />
         <Routes>
@@ -69,6 +70,8 @@ function App() {
           <Route path="/mock-types" element={<MockTypes />}></Route>
           <Route path="/schedule/:mockId" element={<Schedule />}></Route>
           <Route path="/feedbacks" element={<Feedback />}></Route>
+          <Route path="/resources" element={<Resources />}></Route>
+          <Route path="/resource/:name" element={<Resource />}></Route>
         </Routes>
       </ClerkProvider>
     </>
