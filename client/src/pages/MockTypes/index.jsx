@@ -1,45 +1,35 @@
 import React from "react";
 import Card from "../../components/Card";
+import useFetch from "../../hooks/useFetch";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { useAuth, useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 const MockTypes = () => {
-  const mockTypes = [
-    {
-      _id: "1",
-      title: "Full-stack Interview",
-      type: "full-stack",
-      score: 50,
-      interviewers: ["644d9b0db60b99bb257dbe5d", "644da18cb2bbb460d2b49d9e"],
-    },
-    {
-      _id: "2",
-      title: "Frontend Interview",
-      type: "frontend",
-      score: 25,
-      interviewers: ["644da18cb2bbb460d2b49d9e"],
-    },
-    {
-      _id: "3",
-      title: "Backend Interview",
-      type: "backend",
-      score: 25,
-      interviewers: ["644d9b0db60b99bb257dbe5d", "644da18cb2bbb460d2b49d9e"],
-    },
-    {
-      _id: "4",
-      title: "DSA Interview",
-      type: "dsa",
-      score: 40,
-      interviewers: ["644da18cb2bbb460d2b49d9e"],
-    },
-  ];
+  const { isLoaded, isSignedIn, sessionId } = useAuth();
+  const navigate = useNavigate();
+
+  if (!isLoaded || !isSignedIn) {
+    navigate("/sign-in");
+  }
+
+  const { data, loading, error } = useFetch(
+    `${import.meta.env.VITE_REACT_API_URL}/mocks?_clerk_session_id=${sessionId}`
+  );
 
   return (
-    <>
-      <h1>MockTypes</h1>
-      {mockTypes.map((type) => {
-        return <Card title={type.title} />;
-      })}
-    </>
+    <center>
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <h1>MockTypes</h1>
+          {data.map((type) => {
+            return <Card title={type.title} link={`/schedule/${type._id}`} />;
+          })}
+        </>
+      )}
+    </center>
   );
 };
 

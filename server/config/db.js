@@ -8,6 +8,7 @@ mongoose
   .connect(connectionUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    autoIndex: true,
   })
   .then(() => {
     console.log("Database connection established!");
