@@ -11,6 +11,8 @@ import "dotenv/config";
 import mocksRoute from "./routes/mocks.js";
 import interviewerRoute from "./routes/interviewers.js";
 import BookinginterviewRoute from "./routes/bookinginterview.js";
+import UserRoute from "./routes/user.js";
+
 // Importing database connection function
 import db from "./config/db.js";
 
@@ -40,6 +42,7 @@ app.use(express.json());
 app.use("/api/mocks", mocksRoute);
 app.use("/api/interviewers", interviewerRoute);
 app.use("/api/bookinginterviews", BookinginterviewRoute);
+app.use("/api/users", UserRoute);
 
 // Error handling
 app.use((err, req, res, next) => {
@@ -52,6 +55,16 @@ app.use((err, req, res, next) => {
     stack: err.stack,
   });
 });
+
+//* Serve static assets in production, must be at this location of this file
+if (process.env.NODE_ENV === "production") {
+  //*Set static folder
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  );
+}
 
 // Start the server
 const port = process.env.PORT || 3000;
