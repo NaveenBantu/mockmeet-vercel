@@ -1,10 +1,10 @@
-import React from "react";
+// import React from "react";
 import Card from "../../components/Card";
 import useFetch from "../../hooks/useFetch";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
-const MockTypes = () => {
-  const { data, loading, error } = useFetch("http://localhost:5050/api/mocks");
+const Resources = () => {
+  const { data, loading } = useFetch("http://localhost:5050/api/mocks");
   console.log(data);
 
   return (
@@ -15,7 +15,12 @@ const MockTypes = () => {
         <>
           <h1>MockTypes</h1>
           {data.map((type) => {
-            return <Card title={type.title} link={`/schedule/${type._id}`} />;
+            return (
+              <Card
+                title={`${type.type.toUpperCase()} Resource`}
+                link={`/resource/${type.type}`}
+              />
+            );
           })}
         </>
       )}
@@ -23,4 +28,4 @@ const MockTypes = () => {
   );
 };
 
-export default MockTypes;
+export default Resources;

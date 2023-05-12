@@ -21,6 +21,7 @@ const Schedule = () => {
     `http://localhost:5050/api/mocks/${mockId}`
   );
 
+  console.log(data);
   const { interviewers } = data;
 
   const handleDateChange = (date) => {
@@ -75,4 +76,5 @@ const Schedule = () => {
     </center>
   );
 };
+
 export default Schedule;
