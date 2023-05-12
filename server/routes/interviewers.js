@@ -5,7 +5,6 @@ import {
   getInterviewer,
   getInterviewers,
   updateInterviewer,
-  updateInterviewerAvailability,
 } from "../controllers/interviewer.js";
 
 const router = express.Router();
@@ -15,9 +14,6 @@ router.post("/", createInterviewer);
 
 // UPDATE Interviewer
 router.put("/:id", updateInterviewer);
-
-// UPDATE Interviewer
-router.put("/availability/:id", updateInterviewerAvailability);
 
 // DELETE Interviewer
 router.delete("/:id", deleteInterviewer);

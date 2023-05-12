@@ -1,5 +1,7 @@
 import Interviewer from "../models/Interviewer.js";
 import Mock from "../models/Mock.js";
+import { clients, sessions } from "@clerk/clerk-sdk-node";
+import Cookies from "cookies";
 
 // Creating Mock Interview Type
 export const createMock = async (req, res, next) => {
@@ -40,8 +42,11 @@ export const deleteMock = async (req, res, next) => {
 // Get a particular Mock Interviews
 export const getMock = async (req, res, next) => {
   try {
-    const mocks = await Mock.findById(req.params.id);
-    res.status(200).json(mocks);
+    await Mock.findById(req.params.id)
+      .populate("interviewers")
+      .then((mock) => {
+        res.status(200).json(mock);
+      });
   } catch (err) {
     next(err);
   }
@@ -50,23 +55,32 @@ export const getMock = async (req, res, next) => {
 // Get all Mock Interviews
 export const getMocks = async (req, res, next) => {
   try {
-    const mocks = await Mock.find();
-    res.status(200).json(mocks);
-  } catch (err) {
-    next(err);
-  }
-};
+    // Retrieve the particular session ID from a
+    // query string parameter
+    const sessionId = req.query._clerk_session_id;
+    console.log("mock session id ", sessionId);
 
-// Get Mock Interviewers
-export const getMockInterviewers = async (req, res, next) => {
-  try {
-    const mock = await Mock.findById(req.params.id);
-    const list = await Promise.all(
-      mock.interviewers.map((interviewer) => {
-        return Interviewer.findById(interviewer);
+    // Note: Clerk stores the clientToken in a cookie
+    // named "__session" for Firebase compatibility
+    const cookies = new Cookies(req, res);
+    const clientToken = cookies.get("__session");
+    console.log("client tocken", clientToken);
+
+    // const session = await sessions.verifySession(sessionId, clientToken);
+
+    // console.log(session);
+
+    // const client = await clients.verifyClient(sessionToken);
+    // const sessionId = client.lastActiveSessionId;
+
+    Mock.find()
+      .populate("interviewers")
+      .then((mocks) => {
+        res.status(200).json(mocks);
       })
-    );
-    res.status(200).json(list);
+      .catch((err) => {
+        next(err);
+      });
   } catch (err) {
     next(err);
   }
