@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 // import React from "react";
 import Card from "../../components/Card";
 import useFetch from "../../hooks/useFetch";
@@ -17,7 +18,7 @@ const Resources = () => {
           {data.map((type) => {
             return (
               <Card
-                title={`${type.type.toUpperCase()} Resource`}
+                title={`${type.title} Resource`}
                 link={`/resource/${type.type}`}
               />
             );

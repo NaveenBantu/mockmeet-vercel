@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+// import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Accordion,
@@ -60,7 +61,6 @@ function Accordion_list(props) {
             sx={{
               color: "black",
               fontSize: "1.5rem",
-              fontFamily: "",
               mb: "10px",
               fontWeight: "600",
             }}

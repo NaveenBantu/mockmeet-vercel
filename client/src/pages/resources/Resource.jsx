@@ -79,37 +79,6 @@ const frontendData = {
   ],
 };
 
-const softSkillsData = {
-  HTML: [
-    {
-      text: "W3 schools",
-      link: "https://www.w3schools.com/html/default.asp",
-    },
-    {
-      text: "programiz",
-      link: "https://www.programiz.com/html",
-    },
-    {
-      text: "MDN Docs",
-      link: "https://developer.mozilla.org/en-US/docs/Learn/HTML",
-    },
-  ],
-
-  CSS: [
-    {
-      text: "W3 schools",
-      link: "https://www.w3schools.com/css/default.asp",
-    },
-    {
-      text: "programiz",
-      link: "https://www.programiz.com/css",
-    },
-    {
-      text: "MDN Docs",
-      link: "https://developer.mozilla.org/en-US/docs/Learn/css",
-    },
-  ],
-};
 const fullStackData = {
   HTML: [
     {
@@ -252,37 +221,6 @@ const fullStackData = {
     },
   ],
 };
-const dsaData = {
-  HTML: [
-    {
-      text: "W3 schools",
-      link: "https://www.w3schools.com/html/default.asp",
-    },
-    {
-      text: "programiz",
-      link: "https://www.programiz.com/html",
-    },
-    {
-      text: "MDN Docs",
-      link: "https://developer.mozilla.org/en-US/docs/Learn/HTML",
-    },
-  ],
-
-  CSS: [
-    {
-      text: "W3 schools",
-      link: "https://www.w3schools.com/css/default.asp",
-    },
-    {
-      text: "programiz",
-      link: "https://www.programiz.com/css",
-    },
-    {
-      text: "MDN Docs",
-      link: "https://developer.mozilla.org/en-US/docs/Learn/css",
-    },
-  ],
-};
 
 const backendData = {
   NodeJS: [
@@ -343,6 +281,57 @@ const backendData = {
   ],
 };
 
+const softSkillsData = {
+  TimeManagement: [
+    {
+      text: "Simplilearn",
+      link: "https://www.simplilearn.com/time-management-skills-article",
+    },
+  ],
+  ObservationalSkills: [
+    {
+      text: "indeed",
+      link: "https://www.indeed.com/career-advice/career-development/improve-observation-skills",
+    },
+  ],
+  AnalyticalSkills: [
+    {
+      text: "indeed",
+      link: "https://in.indeed.com/career-advice/career-development/how-to-improve-analytical-skills",
+    },
+  ],
+  CreativeSkills: [
+    {
+      text: "wagento",
+      link: "https://www.wagento.com/wagento-way/tips-to-improve-creativity-in-web-designing-skills/",
+    },
+  ],
+};
+
+const dsaData = {
+  dsa: [
+    {
+      text: "Programiz",
+      link: "https://www.programiz.com/dsa",
+    },
+    {
+      text: "GeeksforGeeks",
+      link: "https://www.geeksforgeeks.org/learn-data-structures-and-algorithms-dsa-tutorial/",
+    },
+    {
+      text: "TutorialsPoint",
+      link: "https://www.tutorialspoint.com/data_structures_algorithms/index.htm",
+    },
+    {
+      text: "w3 schools",
+      link: "https://www.w3schools.in/data-structures/intro",
+    },
+    {
+      text: "freecodecamp(video)",
+      link: "https://www.youtube.com/watch?v=RBSGKlAvoiM",
+    },
+  ],
+};
 function Resource() {
   const { name } = useParams();
   let resource;
