@@ -6,10 +6,12 @@ import {
   ChatIcon,
   AttachmentIcon,
 } from "@chakra-ui/icons";
+
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import useAuthFetch from "../../hooks/useAuthFetch";
+
 
 const Dashboard = () => {
   const { user, isLoaded, isSignedIn } = useUser();

@@ -2,6 +2,8 @@ import { Route, Routes, useNavigate } from "react-router";
 import Dashboard from "./pages/Dashboard";
 // import Home from "./pages/Home";
 import MockTypes from "./pages/MockTypes";
+
+import UpcomingInterviews from "./pages/UpcomingInterviews";
 import Header from "./components/Header";
 import Feedback from "./pages/Feedback";
 import Schedule from "./pages/Schedule";
@@ -69,11 +71,16 @@ function App() {
           ></Route>
           <Route path="/mock-types" element={<MockTypes />}></Route>
           <Route path="/schedule/:mockId" element={<Schedule />}></Route>
+        <Route
+          path="/upcoming-interviews"
+          element={<UpcomingInterviews />}
+        ></Route>
           <Route path="/feedbacks" element={<Feedback />}></Route>
           {/* <Route path="/admin" element={<AdminDashboard />}></Route> */}
           <Route path="/availability" element={<Availability />}></Route>
         </Routes>
       </ClerkProvider>
+
     </>
   );
 }
