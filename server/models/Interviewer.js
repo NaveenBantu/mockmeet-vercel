@@ -2,17 +2,23 @@
 import mongoose from "mongoose";
 const InterviewerSchema = new mongoose.Schema(
   {
+    interviewer_id: {
+      type: String,
+      unique: true,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
+      unique: true,
     },
     desc: {
       type: String,
-      required: true,
+      // required: true,
     },
     expertise: {
       type: String,
-      required: true,
+      // required: true,
     },
     rating: {
       type: Number,

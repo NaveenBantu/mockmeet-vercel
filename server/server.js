@@ -16,9 +16,13 @@ import UserRoute from "./routes/user.js";
 // Importing database connection function
 import db from "./config/db.js";
 
-import clerk from "@clerk/clerk-sdk-node";
+import clerk, {
+  ClerkExpressRequireAuth,
+  ClerkExpressWithAuth,
+} from "@clerk/clerk-sdk-node";
 
-const userList = await clerk.users.getUserList();
+// const userList = await clerk.users.getUserList();
+
 // console.log(userList);
 
 // Inititalizing App
@@ -39,6 +43,10 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+// app.use("/api/user", ClerkExpressWithAuth(), (req, res) => {
+//   console.log(req.auth);
+//   res.send(req.auth);
+// });
 app.use("/api/mocks", mocksRoute);
 app.use("/api/interviewers", interviewerRoute);
 app.use("/api/bookinginterviews", BookinginterviewRoute);
