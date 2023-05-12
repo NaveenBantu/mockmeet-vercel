@@ -1,0 +1,62 @@
+.container {
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 84px;
+  background: #faa621;
+  border-radius: 0px;
+  display: flex;
+  justify-content: space-between;
+}
+.text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  top: 40px;
+  left: 126px;
+  font-family: Mulish;
+  font-size: 24px;
+  line-height: 36px;
+  color: #171a1fff;
+  font-weight: 1000;
+}
+
+.icon {
+  /* position: absolute; */
+  /* top: 0px;
+  left: 344px;
+  width: 28px;
+  height: 28px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-size: 170px;
+}
+
+.tabbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-family: Mulish;
+  font-size: 10px;
+  line-height: 16px;
+  opacity: 1;
+  color: grey;
+}
+
+.tabbar label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.tabbar:hover {
+  color: black;
+}

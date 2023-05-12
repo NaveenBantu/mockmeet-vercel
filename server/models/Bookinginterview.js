@@ -12,6 +12,7 @@ const BookedInterview = new mongoose.Schema({
   score: {
     type: Number,
     required: true,
+    default: 0,
   },
   student_id: {
     type: String,
@@ -31,8 +32,7 @@ const BookedInterview = new mongoose.Schema({
   },
   feedback: {
     type: String,
-    required: true,
+    default: "",
   },
 });
-
-export default mongoose.model("Interview", BookedInterview);
+export default mongoose.model("Interviews", BookedInterview);

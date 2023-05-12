@@ -13,9 +13,7 @@ const MockSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  interviewers: {
-    type: [String],
-  },
+  interviewers: [{ type: mongoose.Types.ObjectId, ref: "Interviewer" }],
 });
 
 export default mongoose.model("Mock", MockSchema);

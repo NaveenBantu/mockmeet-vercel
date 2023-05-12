@@ -25,10 +25,11 @@ const InterviewerSchema = new mongoose.Schema(
       min: 0,
       max: 5,
     },
-    interviewTypes: {
-      type: [{ mockType: String, availableDates: { type: [Date] } }],
+    mockType: {
+      type: String,
       required: true,
     },
+    availableDates: { type: [Date] },
   },
   { timestamps: true }
 );
