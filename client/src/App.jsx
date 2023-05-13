@@ -7,6 +7,8 @@ import UpcomingInterviews from "./pages/UpcomingInterviews";
 import Header from "./components/Header";
 import Feedback from "./pages/Feedback";
 import Schedule from "./pages/Schedule";
+import Resources from "./pages/resources/Resources";
+import Resource from "./pages/resources/Resource";
 
 import {
   ClerkProvider,
@@ -76,6 +78,8 @@ function App() {
           element={<UpcomingInterviews />}
         ></Route>
           <Route path="/feedbacks" element={<Feedback />}></Route>
+          <Route path="/resources" element={<Resources />}></Route>
+          <Route path="/resource/:name" element={<Resource />}></Route>
           {/* <Route path="/admin" element={<AdminDashboard />}></Route> */}
           <Route path="/availability" element={<Availability />}></Route>
         </Routes>
