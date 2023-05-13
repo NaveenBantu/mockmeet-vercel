@@ -24,8 +24,8 @@ const MockTypes = () => {
       ) : (
         <>
           <h1>MockTypes</h1>
-          {data.map((type) => {
-            return <Card title={type.title} link={`/schedule/${type._id}`} />;
+          {data.map((type, i) => {
+            return <Card key={i} title={type.title} link={`/schedule/${type._id}`} />;
           })}
         </>
       )}

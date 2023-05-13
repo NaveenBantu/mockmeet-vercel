@@ -1,4 +1,3 @@
-import React from "react";
 import Card from "../../components/Card";
 import {
   CalendarIcon,
@@ -57,7 +56,7 @@ const Dashboard = () => {
         />
         {!isAdmin && <Card title="Leaderboard" icon={SunIcon} />}
         <Card title="Feedback" icon={ChatIcon} link="/feedbacks" />
-        {!isAdmin && <Card title="Resources" icon={AttachmentIcon} />}
+        {!isAdmin && <Card title="Resources" icon={AttachmentIcon} link="/resources"/>}
       </center>
     </>
   );

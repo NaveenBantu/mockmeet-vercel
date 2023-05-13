@@ -140,4 +140,5 @@ const Schedule = () => {
     </center>
   );
 };
+
 export default Schedule;
