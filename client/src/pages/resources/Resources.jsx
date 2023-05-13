@@ -6,7 +6,6 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 
 const Resources = () => {
   const { data, loading } = useFetch("http://localhost:5050/api/mocks");
-  console.log(data);
 
   return (
     <center>
@@ -14,7 +13,7 @@ const Resources = () => {
         <LoadingSpinner />
       ) : (
         <>
-          <h1>MockTypes</h1>
+          <h1>Resources</h1>
           {data.map((type) => {
             return (
               <Card

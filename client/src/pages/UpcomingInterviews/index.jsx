@@ -4,6 +4,7 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import { Button, Card } from "@chakra-ui/react";
 
 const UpcomingInterviews = () => {
   const navigate = useNavigate();
@@ -18,12 +19,17 @@ const UpcomingInterviews = () => {
   );
 
   console.log("interviews data ", data);
+  console.log("error ", error);
+
+  const handleMockSchedule = () => {
+    navigate("/mock-types");
+  };
 
   return (
     <center>
       {loading ? (
         <LoadingSpinner />
-      ) : (
+      ) : data.length > 0 ? (
         data?.map((type) => {
           return (
             <>
@@ -36,6 +42,13 @@ const UpcomingInterviews = () => {
             </>
           );
         })
+      ) : (
+        <Card color="ButtonText" size="lg" colorScheme="blue" margin="20">
+          No Upcoming Interviews
+          <Button margin="10" colorScheme="orange" onClick={handleMockSchedule}>
+            Schedule an Interview
+          </Button>
+        </Card>
       )}
     </center>
   );
