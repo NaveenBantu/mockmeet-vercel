@@ -1,66 +1,43 @@
 import React, { useEffect } from "react";
-import Header from "../../components/header/Header";
 import InterviewCard from "../../components/InterviewCard";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
 
 const UpcomingInterviews = () => {
-  const upcomingInterviews = [
-    {
-      _id: "1",
-      title: "Full-stack Interview",
-      type: "full-stack",
-      date: "06/06/2023",
-      time: "10:00:00",
-      interviewers: ["Urvashi", "Bhargav"],
-    },
-    {
-      _id: "2",
-      title: "Frontend Interview",
-      type: "frontend",
-      date: "07/18/2023",
-      time: "11:00:00",
-      interviewers: ["Urvashi", "Bhargav"],
-    },
-    {
-      _id: "3",
-      title: "Backend Interview",
-      type: "backend",
-      date: "09/18/2023",
-      time: "18:00:00",
-      interviewers: ["Bhargav", "Naveen"],
-    },
-    {
-      _id: "4",
-      title: "DSA Interview",
-      type: "dsa",
-      date: "05/04/2023",
-      time: "16:05:00",
-      interviewers: ["Vamsi", "Bhargav"],
-    },
-  ];
+  const navigate = useNavigate();
+  const { user, isLoaded, isSignedIn } = useUser();
+  if (!isLoaded || !isSignedIn) {
+    navigate("/sign-in");
+  }
+  // Fetching the interviews
+  const userID = user?.id;
+  const { data, loading, error } = useFetch(
+    `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews/${userID}`
+  );
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     window.location.reload();
-  //   }, 600000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  console.log("interviews data ", data);
 
   return (
-    <div>
-      <Header />
-      {upcomingInterviews.map((type) => {
-        return (
-          <>
-            <InterviewCard
-              title={type.title}
-              date={type.date}
-              time={type.time}
-              interviewers={type.interviewers}
-            />
-          </>
-        );
-      })}
-    </div>
+    <center>
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        data?.map((type) => {
+          return (
+            <>
+              <InterviewCard
+                id={type._id}
+                title={type.mock_id?.title}
+                date={type.bookingDate}
+                interviewer={type.interviewer_id?.name}
+              />
+            </>
+          );
+        })
+      )}
+    </center>
   );
 };
 

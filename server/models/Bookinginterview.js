@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const BookedInterview = new mongoose.Schema({
   mock_id: {
-    type: String,
-    required: true,
+    type: mongoose.Types.ObjectId,
+    ref: "Mock",
   },
   total_score: {
     type: Number,
@@ -19,8 +19,10 @@ const BookedInterview = new mongoose.Schema({
     required: true,
   },
   interviewer_id: {
-    type: String,
-    required: true,
+    // type: String,
+    // required: true,
+    type: mongoose.Types.ObjectId,
+    ref: "Interviewer",
   },
   iscompleted: {
     type: Boolean,

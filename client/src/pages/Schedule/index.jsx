@@ -37,9 +37,11 @@ const Schedule = () => {
   );
 
   // Posting the data to Interviews
-  const { postRequest: postInterviewRequest, loading: postLoading } = useFetch(
-    `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews`
-  );
+  const {
+    postRequest: postInterviewRequest,
+    loading: postLoading,
+    error: postError,
+  } = useFetch(`${import.meta.env.VITE_REACT_API_URL}/bookinginterviews`);
 
   const { interviewers, score } = data;
 
@@ -88,8 +90,9 @@ const Schedule = () => {
     console.log(interviewData);
 
     postInterviewRequest(interviewData);
-
-    navigate("/");
+    console.log(postError);
+    // postError ? navigate("/mock-types") : navigate("/upcoming-interviews");
+    navigate("/upcoming-interviews");
   };
 
   return (

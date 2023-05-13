@@ -67,7 +67,9 @@ export const getInterview = async (req, res, next) => {
 export const getInterviews = async (req, res, next) => {
   const userID = req.params.userID;
   try {
-    const interviews = await Interview.find({ student_id: userID });
+    const interviews = await Interview.find({ student_id: userID })
+      .populate("interviewer_id")
+      .populate("mock_id");
     res.status(200).json(interviews);
   } catch (error) {
     next(error);
