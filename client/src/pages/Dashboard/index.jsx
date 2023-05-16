@@ -1,4 +1,3 @@
-import React from "react";
 import Card from "../../components/Card";
 import {
   CalendarIcon,
@@ -6,6 +5,7 @@ import {
   ChatIcon,
   AttachmentIcon,
 } from "@chakra-ui/icons";
+
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
@@ -30,14 +30,6 @@ const Dashboard = () => {
     navigate("/sign-in");
   }
 
-  // Fetching the interviews
-  const userID = user?.id;
-  const { data, loading, error } = useFetch(
-    `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews/${userID}`
-  );
-
-  console.log("interviews data ", data);
-
   const isAdmin = emailAddress?.includes("hashinsert");
 
   return (
@@ -57,10 +49,14 @@ const Dashboard = () => {
             link="/mock-types"
           />
         )}
-        <Card title="Upcoming Interviews" icon={CalendarIcon} />
+        <Card
+          title="Upcoming Interviews"
+          icon={CalendarIcon}
+          link="/upcoming-interviews"
+        />
         {!isAdmin && <Card title="Leaderboard" icon={SunIcon} />}
         <Card title="Feedback" icon={ChatIcon} link="/feedbacks" />
-        {!isAdmin && <Card title="Resources" icon={AttachmentIcon} />}
+        {!isAdmin && <Card title="Resources" icon={AttachmentIcon} link="/resources"/>}
       </center>
     </>
   );

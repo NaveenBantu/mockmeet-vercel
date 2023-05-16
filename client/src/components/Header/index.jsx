@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "../Header/styles.module.css";
 // import GridViewIcon from "../../../node_modules/@mui/icons-material/GridView";
 import GridViewIcon from "@mui/icons-material/GridView";
