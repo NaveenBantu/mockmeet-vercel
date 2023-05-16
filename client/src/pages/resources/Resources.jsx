@@ -5,7 +5,9 @@ import useFetch from "../../hooks/useFetch";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
 const Resources = () => {
-  const { data, loading } = useFetch("http://localhost:5050/api/mocks");
+  const { data, loading } = useFetch(
+    `${import.meta.env.VITE_REACT_API_URL}/mocks`
+  );
 
   return (
     <center>
