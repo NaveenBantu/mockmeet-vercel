@@ -54,9 +54,13 @@ const Dashboard = () => {
           icon={CalendarIcon}
           link="/upcoming-interviews"
         />
-        {!isAdmin && <Card title="Leaderboard" icon={SunIcon} />}
+        {!isAdmin && (
+          <Card title="Leaderboard" icon={SunIcon} link="/leaderboard" />
+        )}
         <Card title="Feedback" icon={ChatIcon} link="/feedbacks" />
-        {!isAdmin && <Card title="Resources" icon={AttachmentIcon} link="/resources"/>}
+        {!isAdmin && (
+          <Card title="Resources" icon={AttachmentIcon} link="/resources" />
+        )}
       </center>
     </>
   );
