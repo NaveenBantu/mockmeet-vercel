@@ -20,6 +20,13 @@ export const createInterviewer = async (req, res, next) => {
     }
     res.status(200).json(savedInterviewer);
   } catch (err) {
+    if (err.code === 11000) {
+      const update = { $push: { availableDates: req.body.availableDates } };
+      const findInt = await Interviewer.findOneAndUpdate(err.keyValue, update, {
+        new: true,
+      });
+      return res.status(200).json(findInt);
+    }
     next(err);
   }
 };

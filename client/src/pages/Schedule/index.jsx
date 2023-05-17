@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useParams, useNavigate } from "react-router";
 import useFetch from "../../hooks/useFetch";
 import { parseISO } from "date-fns";
+import axios from "axios";
 
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useAuth, useUser } from "@clerk/clerk-react";
@@ -23,6 +24,11 @@ const Schedule = () => {
   const [interviewer, setInterviewer] = useState();
   const [level, setLevel] = useState(-1);
 
+  // states for posting interview data
+  const [postLoading, setPostLoading] = useState(false);
+  const [postError, setPostError] = useState(false);
+
+  // Getting the mockid from url params
   const { mockId } = useParams();
 
   const { isLoaded, isSignedIn, userId } = useAuth();
@@ -36,11 +42,6 @@ const Schedule = () => {
   // Fetching the mocks
   const { data, loading, error } = useFetch(
     `${import.meta.env.VITE_REACT_API_URL}/mocks/${mockId}`
-  );
-
-  // Posting the data to Interviews
-  const { postRequest: postInterviewRequest, loading: postLoading } = useFetch(
-    `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews`
   );
 
   const { interviewers, score } = data;
@@ -89,6 +90,7 @@ const Schedule = () => {
     return parsedDates;
   };
 
+
   const validationMessage = useMemo(() => {
     if(level > -1 && interviewer) {
       return ;
@@ -103,19 +105,27 @@ const Schedule = () => {
     }
   }, [level, interviewer])
 
-  const handleSubmit = (e) => {
+  // submitting the form
+  const handleSubmit = async (e) => {
     // prevent the default form submit
     e.preventDefault();
 
-    if(validationMessage) {
-      return;
+    // Posting the data to Interviews
+    setPostLoading(true);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews`,
+        interviewData
+      );
+      console.log(response);
+      navigate("/upcoming-interviews");
+    } catch (error) {
+      setPostError(error);
+      navigate("/mock-types");
     }
-    // submitting the form
-    console.log(interviewData);
 
-    postInterviewRequest(interviewData);
+    setPostLoading(false);
 
-    navigate("/");
   };
 
   return (
@@ -178,4 +188,5 @@ const Schedule = () => {
     </center>
   );
 };
+
 export default Schedule;

@@ -2,9 +2,12 @@ import { Route, Routes, useNavigate } from "react-router";
 import Dashboard from "./pages/Dashboard";
 // import Home from "./pages/Home";
 import MockTypes from "./pages/MockTypes";
+import UpcomingInterviews from "./pages/UpcomingInterviews";
 import Header from "./components/Header";
 import Feedback from "./pages/Feedback";
 import Schedule from "./pages/Schedule";
+import Resources from "./pages/resources/Resources";
+import Resource from "./pages/resources/Resource";
 
 import {
   ClerkProvider,
@@ -13,23 +16,23 @@ import {
   SignIn,
   SignUp,
   UserButton,
+  useUser,
 } from "@clerk/clerk-react";
+import Availability from "./pages/Availability";
 
 function App() {
   const navigate = useNavigate();
 
   const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
-  console.log(clerkPubKey);
   if (!clerkPubKey) {
     throw new Error("Missing Publishable Key");
   }
 
-  const navigte = useNavigate();
   return (
     <>
       <ClerkProvider
         publishableKey={clerkPubKey}
-        navigate={(to) => navigte(to)}
+        navigate={(to) => navigate(to)}
       >
         <Header user={<UserButton />} />
         <Routes>
@@ -58,6 +61,7 @@ function App() {
             element={
               <>
                 {/* <SignedIn> */}
+                {}
                 <Dashboard />
                 {/* </SignedIn> */}
                 {/* <SignedOut>
@@ -68,7 +72,15 @@ function App() {
           ></Route>
           <Route path="/mock-types" element={<MockTypes />}></Route>
           <Route path="/schedule/:mockId" element={<Schedule />}></Route>
+          <Route
+            path="/upcoming-interviews"
+            element={<UpcomingInterviews />}
+          ></Route>
           <Route path="/feedbacks" element={<Feedback />}></Route>
+          <Route path="/resources" element={<Resources />}></Route>
+          <Route path="/resource/:name" element={<Resource />}></Route>
+          {/* <Route path="/admin" element={<AdminDashboard />}></Route> */}
+          <Route path="/availability" element={<Availability />}></Route>
         </Routes>
       </ClerkProvider>
     </>
