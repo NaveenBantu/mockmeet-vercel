@@ -2,6 +2,7 @@ import { Route, Routes, useNavigate } from "react-router";
 import Dashboard from "./pages/Dashboard";
 // import Home from "./pages/Home";
 import MockTypes from "./pages/MockTypes";
+import Leaderboard from "./pages/Leaderboard";
 import UpcomingInterviews from "./pages/UpcomingInterviews";
 import Header from "./components/Header";
 import Feedback from "./pages/Feedback";
@@ -81,6 +82,7 @@ function App() {
           <Route path="/resource/:name" element={<Resource />}></Route>
           {/* <Route path="/admin" element={<AdminDashboard />}></Route> */}
           <Route path="/availability" element={<Availability />}></Route>
+          <Route path="/leaderboard"  element={<Leaderboard/>} ></Route>
         </Routes>
       </ClerkProvider>
     </>
