@@ -1,4 +1,4 @@
-import Express from "express";
+import express from "express";
 import {
   createUser,
   updateUser,
@@ -8,16 +8,16 @@ import {
   getUserInterviews,
 } from "../controllers/user.js";
 
-const router = Express.Router();
+const router = express.Router();
 
 //create User
-router.post("/", createUser);
+router.post("/create", createUser);
 
 //update User
-router.put("/:id", updateUser);
+router.put("/update", updateUser);
 
 //DELETE Users
-router.delete("/:id", deleteUser);
+router.post("/delete", deleteUser);
 
 //GET all Users
 router.get("/", getUsers);

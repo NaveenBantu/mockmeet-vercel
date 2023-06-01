@@ -1,41 +1,36 @@
 import mongoose from "mongoose";
 const UserSchema = new mongoose.Schema(
   {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
+    clerk_id: {
       type: String,
       required: true,
     },
     name: {
       type: String,
       required: true,
-      unique: true,
     },
     email: {
       type: String,
       required: true,
       unique: true,
     },
-    phone: {
-      type: String,
-      required: true,
-    },
     img: {
       type: String,
     },
+    isInterviewer: {
+      type: Boolean,
+      default: false,
+    },
     overall_score: {
       type: Number,
-      required: true,
+      default: 0,
     },
+    level: {
+      type: Number,
+      default: 1,
+    },
+    availableDates: { type: [Date] },
     interviews: [{ type: String }],
-    // isAdmin: {
-    //   type: Boolean,
-    //   default: false,
-    // },
   },
   { timestamps: true }
 );
