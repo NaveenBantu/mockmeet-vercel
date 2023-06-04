@@ -14,6 +14,10 @@ const BookedInterview = new mongoose.Schema({
     required: true,
     default: 0,
   },
+  level: {
+    type: Number,
+    default: 1,
+  },
   student_id: {
     type: String,
     required: true,

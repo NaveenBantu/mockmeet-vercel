@@ -48,7 +48,7 @@ const MockTypes = () => {
                 key={i}
                 icon={icon}
                 title={type.title}
-                link={`/schedule?mockId=${type._id}&score=${type.score}`}
+                link={`/schedule?mockId=${type._id}&score=${type.score}&level=${type.level}`}
               />
             );
           })}

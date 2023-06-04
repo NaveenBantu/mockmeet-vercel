@@ -19,7 +19,8 @@ const Schedule = () => {
   const [date, setDate] = useState(new Date());
   const [interviewData, setInterviewData] = useState({
     mock_id: "",
-    total_score: "",
+    total_score: 0,
+    level: 0,
     student_id: "",
     interviewer_id: "",
     bookingDate: "",
@@ -34,6 +35,7 @@ const Schedule = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const score = searchParams?.get("score");
   const mockId = searchParams?.get("mockId");
+  const level = searchParams?.get("level");
 
   const { isLoaded, isSignedIn, userId } = useAuth();
   const navigate = useNavigate();
@@ -90,6 +92,7 @@ const Schedule = () => {
       interviewer_id: interviewer?._id,
       student_id: userId,
       total_score: score,
+      level: level,
       mock_id: mockId,
       bookingDate: initialDate,
     }));
