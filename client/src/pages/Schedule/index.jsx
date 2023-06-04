@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import styles from "./styles.module.css";
-import { Select } from "@chakra-ui/select";
-import DatePicker from "react-datepicker";
+// import { Select } from "@chakra-ui/select";
+// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams, useNavigate } from "react-router";
 import useFetch from "../../hooks/useFetch";
@@ -12,6 +12,8 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useSearchParams } from "react-router-dom";
 import { Heading } from "@chakra-ui/react";
+
+import dateOptions from "../../utils/dateOptions";
 
 const Schedule = () => {
   const [date, setDate] = useState(new Date());
@@ -48,14 +50,26 @@ const Schedule = () => {
     error,
   } = useFetch(`${import.meta.env.VITE_REACT_API_URL}/users/interviewer`);
 
-  const handleDateChange = (date) => {
+  // Filtering old dates and sorting them out
+  const dates = interviewer?.availableDates
+    .filter((date) => {
+      return parseISO(date) >= new Date();
+    })
+    .sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+
+  // const parsedDates = dates?.map((date) => parseISO(date));
+  // console.log("available dates ", parsedDates);
+
+  const handleDateChange = (event) => {
+    const { value } = event.target;
+
     // Setting the date on change of the date picker
-    setDate(date);
+    setDate(value);
 
     // Setting form data
     setInterviewData((prevInterviewData) => ({
       ...prevInterviewData,
-      bookingDate: date,
+      bookingDate: value,
     }));
   };
 
@@ -67,7 +81,7 @@ const Schedule = () => {
     setInterviewer(interviewer);
 
     // Setting the first available date of the interviewer in the Calendar
-    const initialDate = parseISO(interviewer?.availableDates[0]);
+    const initialDate = dates && parseISO(dates[0]);
     setDate(initialDate);
 
     // Setting the form data for interviewer
@@ -79,12 +93,6 @@ const Schedule = () => {
       mock_id: mockId,
       bookingDate: initialDate,
     }));
-  };
-
-  const getAvailableDates = () => {
-    const dates = interviewer?.availableDates;
-    const parsedDates = dates?.map((date) => parseISO(date));
-    return parsedDates;
   };
 
   const validationMessage = useMemo(() => {
@@ -105,15 +113,14 @@ const Schedule = () => {
     // Posting the data to Interviews
     setPostLoading(true);
 
-    console.log("interview data ", interviewData);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews`,
         interviewData
       );
-      console.log(response);
       navigate("/upcoming-interviews");
     } catch (error) {
+      console.log("error", error);
       setPostError(error);
       navigate("/mock-types");
     }
@@ -129,30 +136,51 @@ const Schedule = () => {
         <>
           <form onSubmit={handleSubmit}>
             <Heading m={4}>Schedule</Heading>
-            <Select
+            {/* <Select
               placeholder="Select Interviewer"
               size="lg"
               value={interviewer?.name}
               onChange={handleInterviewerChange}
+            > */}
+            <select
+              onChange={handleInterviewerChange}
+              required
+              className={styles.select}
             >
+              <option value="">Select an Interviewer</option>
               {interviewers?.map((interviewer) => (
                 <option key={interviewer?._id} value={interviewer?.name}>
                   {interviewer?.name}
                 </option>
               ))}
-            </Select>
+            </select>
+            {/* </Select> */}
             <div className="date-picker-container">
-              {getAvailableDates(interviewer)?.length > 0 ? (
-                <DatePicker
-                  selected={date}
+              {dates?.length > 0 ? (
+                // <DatePicker
+                //   selected={date}
+                //   onChange={handleDateChange}
+                //   minDate={new Date()}
+                //   // maxTime={parsedDates[parsedDates.length - 1]}
+                //   includeDates={parsedDates}
+                //   includeTimes={parsedDates}
+                //   showTimeSelect
+                //   dateFormat="MMMM d, yyyy h:mm aa"
+                //   placeholderText="Select a date"
+                //   inline
+                // />
+                <select
                   onChange={handleDateChange}
-                  includeDates={getAvailableDates(interviewer)}
-                  includeTimes={getAvailableDates(interviewer)}
-                  showTimeSelect
-                  dateFormat="MMMM d, yyyy h:mm aa"
-                  placeholderText="Select a date"
-                  inline
-                />
+                  required
+                  className={styles.select}
+                >
+                  <option value="">Select a Date</option>
+                  {dates?.map((date, index) => (
+                    <option key={index} value={date}>
+                      {new Date(date).toLocaleString("en-US", dateOptions)}
+                    </option>
+                  ))}
+                </select>
               ) : (
                 <p style={{ color: "red" }}>No Available dates</p>
               )}

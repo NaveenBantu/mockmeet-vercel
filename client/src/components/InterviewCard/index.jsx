@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 // import moment from "moment";
+import dateOptions from "../../utils/dateOptions";
 import {
   Badge,
   Card,
@@ -10,7 +11,6 @@ import {
   Heading,
   Box,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 
 const InterviewCard = ({
   id,
@@ -32,16 +32,6 @@ const InterviewCard = ({
   //     setDisable(false);
   //   }
   // }, []);
-
-  // Date formatting options
-  const dateOptions = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  };
 
   return (
     <Box>

@@ -38,7 +38,7 @@ export const updateUser = async (req, res, next) => {
   try {
     const updatedUser = await User.findOneAndUpdate(
       { clerk_id },
-      { availableDates },
+      { $push: { availableDates: availableDates } },
       { new: true }
     );
     res.status(200).json(updatedUser);

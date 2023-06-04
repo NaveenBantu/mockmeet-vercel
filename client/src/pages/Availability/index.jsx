@@ -76,6 +76,7 @@ const Availability = () => {
     // submitting the form
     console.log(interviewerData);
 
+    setPutLoading(true);
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_REACT_API_URL}/users/update`,
@@ -84,7 +85,7 @@ const Availability = () => {
     } catch (error) {
       setPutError(error);
     }
-
+    setPutLoading(false);
     navigate("/");
   };
 
@@ -133,28 +134,23 @@ const Availability = () => {
       ) : (
         <Box
           display="flex"
-          alignContent="center"
-          justifyContent="center"
           borderWidth="2px"
           borderRadius="lg"
-          margin="2rem"
+          margin="1rem"
           padding="1rem"
+          backgroundColor="gray.500"
+          color="gray.100"
         >
-          <FormControl
-            onSubmit={handleSubmit}
-            isRequired
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-          >
-            <Heading>Availability {data?.title}</Heading>
+          <form onSubmit={handleSubmit}>
+            <Heading>Availability</Heading>
             <Select
-              m={0}
-              variant="outline"
+              variant="filled"
+              color="black"
               size="lg"
               width="100%"
               onChange={handleLevelChange}
               placeholder="Select a Level"
+              required
             >
               {data?.map((mock) => (
                 <option key={mock?._id} value={mock?.level}>
@@ -176,13 +172,14 @@ const Availability = () => {
               />
             </div>
 
-            <button
-              type="button"
+            <Button
+              backgroundColor="black"
               onClick={handleTimeChange}
-              className={styles.button1}
+              m={2}
+              color="#faa621"
             >
               Add Time
-            </button>
+            </Button>
             <ul>
               {interviewerData.availableDates?.map((date, index) => {
                 return (
@@ -202,10 +199,10 @@ const Availability = () => {
                 );
               })}
             </ul>
-            <button type="submit" className={styles.button1}>
+            <Button backgroundColor="black" color="#faa621" type="submit" m={2}>
               Add Interview Slots
-            </button>
-          </FormControl>
+            </Button>
+          </form>
         </Box>
       )}
     </>

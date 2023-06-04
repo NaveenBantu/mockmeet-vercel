@@ -1,32 +1,3 @@
-/* Button 811 */
-.button1 {
-  position: relative;
-  margin: 2rem;
-  height: 44px;
-  padding: 0 16px;
-  font-size: 16px;
-  line-height: 26px;
-  color: #faa621ff; /* tertiary2-500 */
-  background: #171a1fff; /* neutral-900 */
-  opacity: 1;
-  border: none;
-  border-radius: 6px; /* border-m */
-}
-/* Hover */
-.button1:hover {
-  color: #faa621ff; /* tertiary2-500 */
-  background: #262a33ff; /* neutral-750 */
-}
-/* Pressed */
-.button1:hover:active {
-  color: #faa621ff; /* tertiary2-500 */
-  background: #323842ff; /* neutral-700 */
-}
-/* Disabled */
-.button1:disabled {
-  opacity: 0.4;
-}
-
 .datepicker-container {
   margin-top: 20px;
   width: 100%;

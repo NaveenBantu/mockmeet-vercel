@@ -115,10 +115,10 @@
 }
 
 /* Dropdown Styling */
-select {
-  margin: 2rem;
+.select {
+  margin-top: 2rem;
   appearance: none;
-  width: 40%;
+  width: 80%;
   height: 40px;
   padding: 10px;
   font-size: 16px;
@@ -129,7 +129,7 @@ select {
   transition: border-color 0.2s ease-in-out;
 }
 
-select:focus {
+.select:focus {
   border-color: #007bff;
   outline: none;
   box-shadow: 0 0 0 2px #007bff40;
