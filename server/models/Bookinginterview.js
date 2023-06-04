@@ -22,7 +22,7 @@ const BookedInterview = new mongoose.Schema({
     // type: String,
     // required: true,
     type: mongoose.Types.ObjectId,
-    ref: "Interviewer",
+    ref: "User",
   },
   iscompleted: {
     type: Boolean,

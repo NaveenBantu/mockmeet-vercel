@@ -3,11 +3,30 @@ import User from "../models/User.js";
 import Interview from "../models/Bookinginterview.js";
 
 export const createUser = async (req, res, next) => {
-  const newUser = new User(req.body);
+  const { data } = req.body;
+  const { first_name, last_name, id, image_url, email_addresses } = data;
+  const email_addr = email_addresses[0].email_address;
+  const isInterviewer = email_addr.includes("hashinsert");
+
+  const userData = {
+    clerk_id: id,
+    name: `${first_name} ${last_name}`,
+    email: email_addr,
+    img: image_url,
+    isInterviewer: isInterviewer,
+  };
+
+  const newUser = new User(userData);
+
+  // Dynamically add available dates to interviewers (Note that this is not declared in the Schema)
+  // if (isInterviewer) {
+  //   newUser.set("availableDates", []);
+  // }
 
   try {
     const savedUser = await newUser.save();
     res.status(200).json(savedUser);
+    // res.status(200).json("saved user");
   } catch (err) {
     next(err);
   }
@@ -15,10 +34,11 @@ export const createUser = async (req, res, next) => {
 
 // UPDATE User
 export const updateUser = async (req, res, next) => {
+  const { clerk_id, availableDates } = req.body;
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      { $set: req.body },
+    const updatedUser = await User.findOneAndUpdate(
+      { clerk_id },
+      { availableDates },
       { new: true }
     );
     res.status(200).json(updatedUser);
@@ -29,10 +49,15 @@ export const updateUser = async (req, res, next) => {
 
 // Deleting User
 export const deleteUser = async (req, res, next) => {
-  const mockId = req.params.mockid;
+  const { data } = req.body;
+  const { deleted, id } = data;
+
+  // const mockId = req.params.mockid;
   try {
-    const deletedUser = await User.findByIdAndDelete(req.params.id);
-    res.status(200).json("User has been deleted.");
+    if (deleted) {
+      const deletedUser = await User.findOneAndDelete({ clerk_id: id });
+      res.status(200).json(deletedUser);
+    }
   } catch (err) {
     next(err);
   }
@@ -43,6 +68,16 @@ export const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
     res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Get all Interviewers
+export const getInterviewers = async (req, res, next) => {
+  try {
+    const interviewers = await User.find({ isInterviewer: true });
+    res.status(200).json(interviewers);
   } catch (err) {
     next(err);
   }

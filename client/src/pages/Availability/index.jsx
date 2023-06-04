@@ -1,24 +1,36 @@
 import React, { useState } from "react";
 import styles from "./styles.module.css";
-import { Select } from "@chakra-ui/select";
-import { Card, CardBody, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  FormControl,
+  HStack,
+  Heading,
+  Select,
+  Text,
+} from "@chakra-ui/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router";
 import useFetch from "../../hooks/useFetch";
-import { parseISO } from "date-fns";
+import axios from "axios";
 
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useAuth, useUser } from "@clerk/clerk-react";
 
 const Availability = () => {
   const [date, setDate] = useState(new Date());
-  const [availableDates, setAvailableDates] = useState([]);
+
+  const [putLoading, setPutLoading] = useState(false);
+  const [putError, setPutError] = useState(false);
+
+  // const [availableDates, setAvailableDates] = useState([]);
+
   const [interviewerData, setInterviewerData] = useState({
-    name: "",
-    mockType: "",
+    level: 0,
     availableDates: [],
-    interviewer_id: "",
+    clerk_id: "",
   });
   const [mock, setMock] = useState("");
 
@@ -36,14 +48,6 @@ const Availability = () => {
     `${import.meta.env.VITE_REACT_API_URL}/mocks`
   );
 
-  // Posting the data to Interviews
-  const { postRequest: postInterviewRequest, loading: postLoading } = useFetch(
-    `${import.meta.env.VITE_REACT_API_URL}/interviewers`
-  );
-
-  const { type } = data;
-  // console.log(data);
-
   const handleDateChange = (date) => {
     // Setting the date on change of the date picker
     setDate(date);
@@ -51,56 +55,48 @@ const Availability = () => {
     console.log("date change ", date);
   };
 
-  const handleInterviewerChange = (event) => {
+  const handleLevelChange = (event) => {
     const { value } = event.target;
-    // const interviewer = interviewers.find((data) => data.name === value);
 
     // Setting internal state to get the available dates
-    setMock(value);
-
-    // Setting the first available date of the interviewer in the Calendar
-    // setDate(parseISO(interviewer?.availableDates[0]));
+    // setMock(value);
 
     // Setting the form data for interviewer
     setInterviewerData((prevInterviewData) => ({
       ...prevInterviewData,
-      interviewer_id: userId,
-      name: user.fullName,
-      mockType: value,
+      clerk_id: userId,
+      level: value,
     }));
   };
 
-  // const getAvailableDates = () => {
-  //   const dates = interviewer?.availableDates;
-  //   const parsedDates = dates?.map((date) => parseISO(date));
-  //   return parsedDates;
-  // };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     // prevent the default form submit
     e.preventDefault();
 
     // submitting the form
     console.log(interviewerData);
 
-    postInterviewRequest(interviewerData);
+    try {
+      const response = await axios.put(
+        `${import.meta.env.VITE_REACT_API_URL}/users/update`,
+        interviewerData
+      );
+    } catch (error) {
+      setPutError(error);
+    }
 
     navigate("/");
   };
 
   const handleTimeChange = () => {
-    console.log(date);
-
     if (date !== "" && !interviewerData.availableDates.includes(date)) {
       // Setting form data
-      // setAvailableDates((prevDates) => [...prevDates, date]);
       setInterviewerData((prevInterviewData) => ({
         ...prevInterviewData,
         availableDates: [...interviewerData.availableDates, date],
       }));
     }
   };
-  console.log(interviewerData.availableDates);
 
   const filterPassedTime = (time) => {
     const currentDate = new Date();
@@ -109,43 +105,75 @@ const Availability = () => {
     return currentDate.getTime() < selectedDate.getTime();
   };
 
+  // Handle function to delete the date in the list
+  const handleDelete = (e, index) => {
+    // e.preventDefault();
+    const updatedItems = [...interviewerData.availableDates];
+    updatedItems.splice(index, 1);
+    setInterviewerData((prevInterviewData) => ({
+      ...prevInterviewData,
+      availableDates: updatedItems,
+    }));
+  };
+
+  // Date formatting options
+  const dateOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+
   return (
-    <center>
-      {loading || postLoading ? (
+    <>
+      {loading || putLoading ? (
         <LoadingSpinner />
       ) : (
-        <>
-          <form onSubmit={handleSubmit}>
-            <h2 className={styles.text}>Availability {data?.title}</h2>
+        <Box
+          display="flex"
+          alignContent="center"
+          justifyContent="center"
+          borderWidth="2px"
+          borderRadius="lg"
+          margin="2rem"
+          padding="1rem"
+        >
+          <FormControl
+            onSubmit={handleSubmit}
+            isRequired
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+          >
+            <Heading>Availability {data?.title}</Heading>
             <Select
-              placeholder="Select MockType"
-              // size="lg"
-              isRequired
-              value={mock?.type}
-              onChange={handleInterviewerChange}
+              m={0}
+              variant="outline"
+              size="lg"
+              width="100%"
+              onChange={handleLevelChange}
+              placeholder="Select a Level"
             >
               {data?.map((mock) => (
-                <option key={mock?._id} value={mock?.type}>
+                <option key={mock?._id} value={mock?.level}>
                   {mock?.title}
                 </option>
               ))}
             </Select>
-            <div className="date-picker-container">
-              {/* {getAvailableDates(interviewer)?.length > 0 ? ( */}
+
+            {/* Datepicker */}
+            <div className={styles["datepicker-container"]}>
               <DatePicker
+                className={styles["custom-datepicker"]}
                 selected={date}
                 onChange={handleDateChange}
                 filterTime={filterPassedTime}
-                // includeDates={getAvailableDates(interviewer)}
-                // includeTimes={getAvailableDates(interviewer)}
                 showTimeSelect
                 dateFormat="MMMM d, yyyy h:mm aa"
                 placeholderText="Select a date"
-                // inline
               />
-              {/* ) : ( */}
-              {/* <p>No Available dates</p> */}
-              {/* )} */}
             </div>
 
             <button
@@ -156,17 +184,31 @@ const Availability = () => {
               Add Time
             </button>
             <ul>
-              {interviewerData.availableDates.map((date) => {
-                return <li>{new Date(date).toLocaleString()}</li>;
+              {interviewerData.availableDates?.map((date, index) => {
+                return (
+                  <Card variant={"elevated"} p={4}>
+                    <HStack spacing={8}>
+                      <Text as="b" key={index}>
+                        {new Date(date).toLocaleString("en-US", dateOptions)}
+                      </Text>
+                      <Button
+                        onClick={() => handleDelete(index)}
+                        colorScheme="red"
+                      >
+                        Delete
+                      </Button>
+                    </HStack>
+                  </Card>
+                );
               })}
             </ul>
             <button type="submit" className={styles.button1}>
               Add Interview Slots
             </button>
-          </form>
-        </>
+          </FormControl>
+        </Box>
       )}
-    </center>
+    </>
   );
 };
 export default Availability;
