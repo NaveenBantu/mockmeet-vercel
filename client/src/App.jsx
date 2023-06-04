@@ -17,7 +17,7 @@ import {
   SignIn,
   SignUp,
   UserButton,
-  useUser,
+  RedirectToSignIn,
 } from "@clerk/clerk-react";
 import Availability from "./pages/Availability";
 
@@ -61,13 +61,12 @@ function App() {
             path="/"
             element={
               <>
-                {/* <SignedIn> */}
-                {}
-                <Dashboard />
-                {/* </SignedIn> */}
-                {/* <SignedOut>
+                <SignedIn>
+                  <Dashboard />
+                </SignedIn>
+                <SignedOut>
                   <RedirectToSignIn redirectUrl={window.location.href} />
-                </SignedOut> */}
+                </SignedOut>
               </>
             }
           ></Route>
