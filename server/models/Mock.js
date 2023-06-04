@@ -5,15 +5,15 @@ const MockSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  type: {
-    type: String,
+  level: {
+    type: Number,
     required: true,
   },
   score: {
     type: Number,
     required: true,
   },
-  interviewers: [{ type: mongoose.Types.ObjectId, ref: "Interviewer" }],
+  // interviewers: [{ type: mongoose.Types.ObjectId, ref: "Interviewer" }],
 });
 
 export default mongoose.model("Mock", MockSchema);

@@ -1,5 +1,5 @@
 import Interview from "../models/Bookinginterview.js";
-import Interviewer from "../models/Interviewer.js";
+import User from "../models/User.js";
 
 //create new interview
 export const createInterview = async (req, res, next) => {
@@ -8,7 +8,7 @@ export const createInterview = async (req, res, next) => {
     const savedInterview = await newInterview.save();
     // Delete the booked date from interviewer available dates
     try {
-      await Interviewer.findOneAndUpdate(
+      await User.findOneAndUpdate(
         { _id: savedInterview.interviewer_id },
         {
           $pull: { availableDates: savedInterview.bookingDate },
@@ -40,7 +40,7 @@ export const deleteInterview = async (req, res, next) => {
     const deletedInterview = await Interview.findOneAndDelete(req.params.id);
     // Add the booking date to interviewer available dates after deleting the interview
     try {
-      await Interviewer.findOneAndUpdate(
+      await User.findOneAndUpdate(
         { _id: deletedInterview.interviewer_id },
         {
           $push: { availableDates: deletedInterview.bookingDate },

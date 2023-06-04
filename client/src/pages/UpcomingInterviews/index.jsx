@@ -3,8 +3,7 @@ import InterviewCard from "../../components/InterviewCard";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
-import { Button, Card } from "@chakra-ui/react";
+import { Button, Card, CardHeader, Heading } from "@chakra-ui/react";
 import axios from "axios";
 
 const UpcomingInterviews = () => {
@@ -61,30 +60,36 @@ const UpcomingInterviews = () => {
   };
 
   return (
-    <center>
+    <>
       {loading ? (
         <LoadingSpinner />
       ) : data.length > 0 ? (
-        data?.map((type) => {
-          return (
-            <InterviewCard
-              id={type._id}
-              title={type.mock_id?.title}
-              date={type.bookingDate}
-              interviewer={type.interviewer_id?.name}
-              handleDelete={handleDeleteInterview}
-            />
-          );
-        })
+        <>
+          <Heading m={4}>Upcoming Interviews</Heading>
+          {data?.map((type) => {
+            return (
+              <InterviewCard
+                key={type._id}
+                id={type._id}
+                title={type.mock_id?.title}
+                date={type.bookingDate}
+                interviewer={type.interviewer_id?.name}
+                handleDelete={handleDeleteInterview}
+              />
+            );
+          })}
+        </>
       ) : (
         <Card color="ButtonText" size="lg" colorScheme="blue" margin="20">
-          No Upcoming Interviews
+          <CardHeader>
+            <Heading size="md">No Upcoming Interviews</Heading>
+          </CardHeader>
           <Button margin="10" colorScheme="orange" onClick={handleMockSchedule}>
             Schedule an Interview
           </Button>
         </Card>
       )}
-    </center>
+    </>
   );
 };
 

@@ -72,7 +72,7 @@ function App() {
             }
           ></Route>
           <Route path="/mock-types" element={<MockTypes />}></Route>
-          <Route path="/schedule/:mockId" element={<Schedule />}></Route>
+          <Route path="/schedule" element={<Schedule />}></Route>
           <Route
             path="/upcoming-interviews"
             element={<UpcomingInterviews />}
@@ -82,7 +82,7 @@ function App() {
           <Route path="/resource/:name" element={<Resource />}></Route>
           {/* <Route path="/admin" element={<AdminDashboard />}></Route> */}
           <Route path="/availability" element={<Availability />}></Route>
-          <Route path="/leaderboard"  element={<Leaderboard/>} ></Route>
+          <Route path="/leaderboard" element={<Leaderboard />}></Route>
         </Routes>
       </ClerkProvider>
     </>

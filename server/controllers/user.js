@@ -34,10 +34,11 @@ export const createUser = async (req, res, next) => {
 
 // UPDATE User
 export const updateUser = async (req, res, next) => {
+  const { clerk_id, availableDates } = req.body;
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      { $set: req.body },
+    const updatedUser = await User.findOneAndUpdate(
+      { clerk_id },
+      { availableDates },
       { new: true }
     );
     res.status(200).json(updatedUser);
@@ -67,6 +68,16 @@ export const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
     res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Get all Interviewers
+export const getInterviewers = async (req, res, next) => {
+  try {
+    const interviewers = await User.find({ isInterviewer: true });
+    res.status(200).json(interviewers);
   } catch (err) {
     next(err);
   }

@@ -1,7 +1,4 @@
-import Interviewer from "../models/Interviewer.js";
 import Mock from "../models/Mock.js";
-import { clients, sessions } from "@clerk/clerk-sdk-node";
-import Cookies from "cookies";
 
 // Creating Mock Interview Type
 export const createMock = async (req, res, next) => {
@@ -42,11 +39,9 @@ export const deleteMock = async (req, res, next) => {
 // Get a particular Mock Interviews
 export const getMock = async (req, res, next) => {
   try {
-    await Mock.findById(req.params.id)
-      .populate("interviewers")
-      .then((mock) => {
-        res.status(200).json(mock);
-      });
+    await Mock.findById(req.params.id).then((mock) => {
+      res.status(200).json(mock);
+    });
   } catch (err) {
     next(err);
   }
@@ -55,26 +50,8 @@ export const getMock = async (req, res, next) => {
 // Get all Mock Interviews
 export const getMocks = async (req, res, next) => {
   try {
-    // Retrieve the particular session ID from a
-    // query string parameter
-    const sessionId = req.query._clerk_session_id;
-    console.log("mock session id ", sessionId);
-
-    // Note: Clerk stores the clientToken in a cookie
-    // named "__session" for Firebase compatibility
-    const cookies = new Cookies(req, res);
-    const clientToken = cookies.get("__session");
-    console.log("client tocken", clientToken);
-
-    // const session = await sessions.verifySession(sessionId, clientToken);
-
-    // console.log(session);
-
-    // const client = await clients.verifyClient(sessionToken);
-    // const sessionId = client.lastActiveSessionId;
-
     Mock.find()
-      .populate("interviewers")
+      .sort({ level: 1 })
       .then((mocks) => {
         res.status(200).json(mocks);
       })

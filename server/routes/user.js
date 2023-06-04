@@ -5,6 +5,7 @@ import {
   deleteUser,
   getUser,
   getUsers,
+  getInterviewers,
   getUserInterviews,
 } from "../controllers/user.js";
 
@@ -21,6 +22,9 @@ router.post("/delete", deleteUser);
 
 //GET all Users
 router.get("/", getUsers);
+
+//GET all Interviewers
+router.get("/interviewer", getInterviewers);
 
 //GEt particular User
 router.get("/:id", getUser);

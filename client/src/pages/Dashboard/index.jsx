@@ -10,6 +10,7 @@ import { useAuth, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import useAuthFetch from "../../hooks/useAuthFetch";
+import { Heading } from "@chakra-ui/react";
 
 const Dashboard = () => {
   const { user, isLoaded, isSignedIn } = useUser();
@@ -34,34 +35,32 @@ const Dashboard = () => {
 
   return (
     <>
-      <center>
-        <h2>Welcome {user?.firstName}</h2>
-        {isAdmin ? (
-          <Card
-            title="Add Availability"
-            icon={CalendarIcon}
-            link="/availability"
-          />
-        ) : (
-          <Card
-            title="Schedule Interviews"
-            icon={CalendarIcon}
-            link="/mock-types"
-          />
-        )}
+      <Heading m={4}>Welcome {user?.firstName}</Heading>
+      {isAdmin ? (
         <Card
-          title="Upcoming Interviews"
+          title="Add Availability"
           icon={CalendarIcon}
-          link="/upcoming-interviews"
+          link="/availability"
         />
-        {!isAdmin && (
-          <Card title="Leaderboard" icon={SunIcon} link="/leaderboard" />
-        )}
-        <Card title="Feedback" icon={ChatIcon} link="/feedbacks" />
-        {!isAdmin && (
-          <Card title="Resources" icon={AttachmentIcon} link="/resources" />
-        )}
-      </center>
+      ) : (
+        <Card
+          title="Schedule Interviews"
+          icon={CalendarIcon}
+          link="/mock-types"
+        />
+      )}
+      <Card
+        title="Upcoming Interviews"
+        icon={CalendarIcon}
+        link="/upcoming-interviews"
+      />
+      {!isAdmin && (
+        <Card title="Leaderboard" icon={SunIcon} link="/leaderboard" />
+      )}
+      <Card title="Feedback" icon={ChatIcon} link="/feedbacks" />
+      {!isAdmin && (
+        <Card title="Resources" icon={AttachmentIcon} link="/resources" />
+      )}
     </>
   );
 };

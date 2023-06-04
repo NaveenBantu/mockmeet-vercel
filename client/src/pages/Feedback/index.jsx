@@ -7,7 +7,8 @@ import {
   AccordionPanel,
   AccordionIcon,
   Box,
-} from '@chakra-ui/react'
+  Heading,
+} from "@chakra-ui/react";
 
 import styles from "./styles.module.css";
 
@@ -50,26 +51,33 @@ const Feedback = () => {
   }, []);
   return (
     <>
-      <h1 className={styles.heading} >Feedbacks:</h1>
-      <Accordion allowMultiple>
+      <Heading m={4}>Feedbacks</Heading>
+      <Accordion allowMultiple m={4}>
         {feedbacks.length === 0 ? (
           <h3>No Feedbacks</h3>
         ) : (
           feedbacks.map((feedbackItem) => {
             // return <Card key={feedback._id} title={feedback.title} />;
-            return <AccordionItem  key={feedbackItem._id}>
-                    <h2>
-                      <AccordionButton className={styles.container}>
-                        <Box className={styles.title} as="span" flex='1' textAlign='left'>
-                          {feedbackItem.title}
-                        </Box>
-                        <AccordionIcon className={styles.icon} />
-                      </AccordionButton>
-                      <AccordionPanel className={styles.accordian_panel} pb={4}>
-                      { feedbackItem.feedback }
-                    </AccordionPanel>
-                    </h2>
-                  </AccordionItem>
+            return (
+              <AccordionItem key={feedbackItem._id}>
+                <h2>
+                  <AccordionButton className={styles.container}>
+                    <Box
+                      className={styles.title}
+                      as="span"
+                      flex="1"
+                      textAlign="left"
+                    >
+                      {feedbackItem.title}
+                    </Box>
+                    <AccordionIcon className={styles.icon} />
+                  </AccordionButton>
+                  <AccordionPanel className={styles.accordian_panel} pb={4}>
+                    {feedbackItem.feedback}
+                  </AccordionPanel>
+                </h2>
+              </AccordionItem>
+            );
           })
         )}
       </Accordion>
@@ -79,4 +87,3 @@ const Feedback = () => {
 };
 
 export default Feedback;
-

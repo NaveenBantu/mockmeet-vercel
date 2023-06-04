@@ -10,26 +10,28 @@ import axios from "axios";
 
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useAuth, useUser } from "@clerk/clerk-react";
+import { useSearchParams } from "react-router-dom";
+import { Heading } from "@chakra-ui/react";
 
 const Schedule = () => {
   const [date, setDate] = useState(new Date());
   const [interviewData, setInterviewData] = useState({
     mock_id: "",
-    level: -1,
     total_score: "",
     student_id: "",
     interviewer_id: "",
     bookingDate: "",
   });
   const [interviewer, setInterviewer] = useState();
-  const [level, setLevel] = useState(-1);
 
   // states for posting interview data
   const [postLoading, setPostLoading] = useState(false);
   const [postError, setPostError] = useState(false);
 
-  // Getting the mockid from url params
-  const { mockId } = useParams();
+  // Getting the mockid and score from url query params
+  const [searchParams, setSearchParams] = useSearchParams();
+  const score = searchParams?.get("score");
+  const mockId = searchParams?.get("mockId");
 
   const { isLoaded, isSignedIn, userId } = useAuth();
   const navigate = useNavigate();
@@ -39,12 +41,12 @@ const Schedule = () => {
     navigate("/sign-in");
   }
 
-  // Fetching the mocks
-  const { data, loading, error } = useFetch(
-    `${import.meta.env.VITE_REACT_API_URL}/mocks/${mockId}`
-  );
-
-  const { interviewers, score } = data;
+  // Fetching the interviewers
+  const {
+    data: interviewers,
+    loading,
+    error,
+  } = useFetch(`${import.meta.env.VITE_REACT_API_URL}/users/interviewer`);
 
   const handleDateChange = (date) => {
     // Setting the date on change of the date picker
@@ -57,12 +59,6 @@ const Schedule = () => {
     }));
   };
 
-  const handleLevelChange = (event) => {
-    const { value } = event.target;
-    setLevel(value ? value : -1);
-
-  }
-
   const handleInterviewerChange = (event) => {
     const { value } = event.target;
     const interviewer = interviewers.find((data) => data.name === value);
@@ -71,16 +67,17 @@ const Schedule = () => {
     setInterviewer(interviewer);
 
     // Setting the first available date of the interviewer in the Calendar
-    setDate(parseISO(interviewer?.availableDates[0]));
+    const initialDate = parseISO(interviewer?.availableDates[0]);
+    setDate(initialDate);
 
     // Setting the form data for interviewer
     setInterviewData((prevInterviewData) => ({
       ...prevInterviewData,
       interviewer_id: interviewer?._id,
-      level,
       student_id: userId,
       total_score: score,
       mock_id: mockId,
+      bookingDate: initialDate,
     }));
   };
 
@@ -90,20 +87,15 @@ const Schedule = () => {
     return parsedDates;
   };
 
-
   const validationMessage = useMemo(() => {
-    if(level > -1 && interviewer) {
-      return ;
+    if (interviewer) {
+      return;
     } else {
-      if(level === -1 && !interviewer) {
-        return 'Please fill the necessary information!';
-      } else if(level === -1) {
-        return 'Please select the interview level!';
-      } else {
-        return 'Please select the interviewer!';
-      } 
+      if (!interviewer) {
+        return "Please select the interviewer!";
+      }
     }
-  }, [level, interviewer])
+  }, [interviewer]);
 
   // submitting the form
   const handleSubmit = async (e) => {
@@ -112,6 +104,8 @@ const Schedule = () => {
 
     // Posting the data to Interviews
     setPostLoading(true);
+
+    console.log("interview data ", interviewData);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews`,
@@ -125,7 +119,6 @@ const Schedule = () => {
     }
 
     setPostLoading(false);
-
   };
 
   return (
@@ -135,19 +128,7 @@ const Schedule = () => {
       ) : (
         <>
           <form onSubmit={handleSubmit}>
-            <h3 className={styles.text}>Schedule {data?.title}</h3>
-            <Select
-              placeholder="Select Level"
-              size="lg"
-              value={level}
-              onChange={handleLevelChange}
-            >
-              {[1, 2, 3].map((level) => (
-                <option key={level} value={level}>
-                  {level}
-                </option>
-              ))}
-            </Select>
+            <Heading m={4}>Schedule</Heading>
             <Select
               placeholder="Select Interviewer"
               size="lg"
@@ -173,12 +154,14 @@ const Schedule = () => {
                   inline
                 />
               ) : (
-                <p style={{color: 'red'}}>No Available dates</p>
+                <p style={{ color: "red" }}>No Available dates</p>
               )}
             </div>
-            {
-              validationMessage ? <p style={{color: 'red'}}>{validationMessage}</p> : ''
-            }
+            {validationMessage ? (
+              <p style={{ color: "red" }}>{validationMessage}</p>
+            ) : (
+              ""
+            )}
             <button type="submit" className={styles.button1}>
               Book Interview Slot
             </button>
