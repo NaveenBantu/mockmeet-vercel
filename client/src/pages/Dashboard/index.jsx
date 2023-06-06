@@ -9,7 +9,6 @@ import {
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
-import useAuthFetch from "../../hooks/useAuthFetch";
 import { Heading } from "@chakra-ui/react";
 
 const Dashboard = () => {
