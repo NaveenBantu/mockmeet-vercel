@@ -65,15 +65,20 @@ export const getInterview = async (req, res, next) => {
 };
 // get all Interview of user
 export const getInterviews = async (req, res, next) => {
-  const userID = req.params.userID;
+  const {role, userID} = req.params;
   const complete = !(req.query.complete === "false");
   try {
-    const interviews = await Interview.find({
+    const interviews = (role === 's') ? await Interview.find({
       student_id: userID,
       iscompleted: complete,
-    })
+      })
       .populate("interviewer_id")
-      .populate("mock_id");
+      .populate("mock_id") : await Interview.find({
+        interviewer_id: userID,
+        iscompleted: complete,
+        })
+        .populate("student_id")
+        .populate("mock_id");
     res.status(200).json(interviews);
   } catch (error) {
     next(error);
