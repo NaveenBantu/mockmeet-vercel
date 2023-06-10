@@ -22,7 +22,7 @@ const Schedule = () => {
     total_score: 0,
     level: 0,
     student_id: "",
-    interviewer_id: "",
+    interviewer: "",
     bookingDate: "",
   });
   const [interviewer, setInterviewer] = useState();
@@ -89,7 +89,7 @@ const Schedule = () => {
     // Setting the form data for interviewer
     setInterviewData((prevInterviewData) => ({
       ...prevInterviewData,
-      interviewer_id: interviewer?._id,
+      interviewer: interviewer?._id,
       student_id: userId,
       total_score: score,
       level: level,

@@ -18,13 +18,11 @@ const BookedInterview = new mongoose.Schema({
     type: Number,
     default: 1,
   },
-  student_id: {
-    type: String,
-    required: true,
+  student: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
   },
-  interviewer_id: {
-    // type: String,
-    // required: true,
+  interviewer: {
     type: mongoose.Types.ObjectId,
     ref: "User",
   },
