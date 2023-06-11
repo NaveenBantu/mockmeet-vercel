@@ -7,7 +7,6 @@ import { Button, Card, CardHeader, Heading } from "@chakra-ui/react";
 import axios from "axios";
 
 const UpcomingInterviews = () => {
-
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -33,9 +32,9 @@ const UpcomingInterviews = () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${
-          import.meta.env.VITE_REACT_API_URL
-        }/bookinginterviews/user/${isAdmin ? 'i' : 's'}/${userID}?complete=false`
+        `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews/user/${
+          isAdmin ? "i" : "s"
+        }/${userID}?complete=false`
       );
       setData(res.data);
     } catch (err) {
@@ -80,26 +79,37 @@ const UpcomingInterviews = () => {
                 id={type._id}
                 title={type.mock_id?.title}
                 date={type.bookingDate}
-                interviewer={type.interviewer_id?.name}
+                withPerson={
+                  isAdmin ? type.student?.name : type.interviewer?.name
+                }
                 handleDelete={handleDeleteInterview}
+                isAdmin={isAdmin}
               />
             );
           })}
         </>
       ) : (
-        <Card color="ButtonText" size="lg" colorScheme="blue" margin="20">
+        <Card color="ButtonText" size="lg" colorScheme="blue" margin="10">
           <CardHeader>
             <Heading size="md">No Upcoming Interviews</Heading>
           </CardHeader>
-          {
-            isAdmin ? <Button margin="10" colorScheme="orange" onClick={handleAddAvailability}>
-            Add Availability
-          </Button> :
-            <Button margin="10" colorScheme="orange" onClick={handleMockSchedule}>
-            Schedule an Interview
-          </Button>
-          }
-          
+          {isAdmin ? (
+            <Button
+              margin="10"
+              colorScheme="orange"
+              onClick={handleAddAvailability}
+            >
+              Add Availability
+            </Button>
+          ) : (
+            <Button
+              margin="10"
+              colorScheme="orange"
+              onClick={handleMockSchedule}
+            >
+              Schedule an Interview
+            </Button>
+          )}
         </Card>
       )}
     </>

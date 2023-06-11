@@ -10,6 +10,7 @@ import {
   Button,
   Heading,
   Box,
+  useMediaQuery,
 } from "@chakra-ui/react";
 
 const InterviewCard = ({
@@ -17,7 +18,8 @@ const InterviewCard = ({
   title,
   date,
   time,
-  interviewer,
+  withPerson,
+  isAdmin,
   handleDelete,
 }) => {
   // useEffect(() => {
@@ -33,13 +35,15 @@ const InterviewCard = ({
   //   }
   // }, []);
 
+  const [isSmallerThanMd] = useMediaQuery("(max-width: 768px)");
+
   return (
     <Box>
       <Card
         backgroundColor="black"
         p={2}
         m={2}
-        direction="row"
+        direction={isSmallerThanMd ? "column" : "row"}
         justify="space-between"
         alignItems="center"
       >
@@ -48,9 +52,9 @@ const InterviewCard = ({
             {title}
           </Heading>
         </CardHeader>
-        <CardBody>
+        <CardBody py="0">
           <Heading size="sm" color="#faa621">
-            By: {interviewer}
+            {isAdmin ? `Student: ${withPerson}` : `Interviewer: ${withPerson}`}
           </Heading>
           <Badge p={2} mt={2}>
             {new Date(date).toLocaleString("en-US", dateOptions)}
