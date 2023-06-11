@@ -10,21 +10,20 @@ import { useAuth, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { Heading } from "@chakra-ui/react";
+import {
+  FaBookReader,
+  FaCalendarAlt,
+  FaCalendarCheck,
+  FaCommentAlt,
+  FaTrophy,
+} from "react-icons/fa";
 
 const Dashboard = () => {
   const { user, isLoaded, isSignedIn } = useUser();
-  const { getToken } = useAuth();
   const navigate = useNavigate();
 
   // Fetching auth user
-  // console.log("auth fetch function ", useAuthFetch());
-
   const emailAddress = user?.primaryEmailAddress.emailAddress;
-  // const fetchUser = useAuthFetch()(
-  //   `${import.meta.env.VITE_REACT_API_URL}/user`
-  // );
-
-  // console.log(fetchUser);
 
   if (!isLoaded || !isSignedIn) {
     navigate("/sign-in");
@@ -38,27 +37,27 @@ const Dashboard = () => {
       {isAdmin ? (
         <Card
           title="Add Availability"
-          icon={CalendarIcon}
+          icon={FaCalendarAlt}
           link="/availability"
         />
       ) : (
         <Card
           title="Schedule Interviews"
-          icon={CalendarIcon}
+          icon={FaCalendarAlt}
           link="/mock-types"
         />
       )}
       <Card
         title="Upcoming Interviews"
-        icon={CalendarIcon}
+        icon={FaCalendarCheck}
         link="/upcoming-interviews"
       />
       {!isAdmin && (
-        <Card title="Leaderboard" icon={SunIcon} link="/leaderboard" />
+        <Card title="Leaderboard" icon={FaTrophy} link="/leaderboard" />
       )}
-      <Card title="Feedback" icon={ChatIcon} link="/feedbacks" />
+      <Card title="Feedback" icon={FaCommentAlt} link="/feedbacks" />
       {!isAdmin && (
-        <Card title="Resources" icon={AttachmentIcon} link="/resources" />
+        <Card title="Resources" icon={FaBookReader} link="/resources" />
       )}
     </>
   );
