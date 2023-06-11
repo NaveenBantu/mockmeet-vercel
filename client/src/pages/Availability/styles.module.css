@@ -1,6 +1,6 @@
 .datepicker-container {
   margin-top: 20px;
-  width: 100%;
+  width: 80%;
 }
 
 .custom-datepicker {
@@ -62,9 +62,9 @@
 
 /* Dropdown Styling */
 select {
-  margin: 2rem;
+  margin-top: 2rem;
   appearance: none;
-  width: 40%;
+  width: 80%;
   height: 40px;
   padding: 10px;
   font-size: 16px;
@@ -101,4 +101,8 @@ button {
 
 button:hover {
   background-color: #d32f2f;
+}
+
+.form {
+  width: 100%;
 }

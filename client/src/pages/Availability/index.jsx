@@ -74,8 +74,6 @@ const Availability = () => {
     e.preventDefault();
 
     // submitting the form
-    console.log(interviewerData);
-
     setPutLoading(true);
     try {
       const response = await axios.put(
@@ -138,26 +136,22 @@ const Availability = () => {
           borderRadius="lg"
           margin="1rem"
           padding="1rem"
-          backgroundColor="gray.500"
-          color="gray.100"
         >
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className={styles.form}>
             <Heading>Availability</Heading>
-            <Select
-              variant="filled"
-              color="black"
-              size="lg"
-              width="100%"
+            {/* Select level */}
+            <select
               onChange={handleLevelChange}
-              placeholder="Select a Level"
               required
+              className={styles.select}
             >
+              <option value={0}>Select Level</option>
               {data?.map((mock) => (
                 <option key={mock?._id} value={mock?.level}>
                   {mock?.title}
                 </option>
               ))}
-            </Select>
+            </select>
 
             {/* Datepicker */}
             <div className={styles["datepicker-container"]}>
@@ -172,6 +166,7 @@ const Availability = () => {
               />
             </div>
 
+            {/* Button to add the time */}
             <Button
               backgroundColor="black"
               onClick={handleTimeChange}
@@ -180,11 +175,20 @@ const Availability = () => {
             >
               Add Time
             </Button>
+
+            {/* List of Added Availability times */}
             <ul>
               {interviewerData.availableDates?.map((date, index) => {
                 return (
-                  <Card variant={"elevated"} p={4}>
-                    <HStack spacing={8}>
+                  <Card
+                    key={index}
+                    variant={"elevated"}
+                    p={4}
+                    background="black"
+                    color="gray.200"
+                    my={2}
+                  >
+                    <HStack spacing={8} justifyContent="space-between">
                       <Text as="b" key={index}>
                         {new Date(date).toLocaleString("en-US", dateOptions)}
                       </Text>
