@@ -21,6 +21,7 @@ const InterviewCard = ({
   withPerson,
   isAdmin,
   handleDelete,
+  handleComplete,
 }) => {
   // useEffect(() => {
   //   let startTime = moment(`${date} ${time}`, "MM/DD/YYYY HH:mm:ss");
@@ -61,9 +62,15 @@ const InterviewCard = ({
           </Badge>
         </CardBody>
         <CardFooter>
-          <Button colorScheme="red" onClick={() => handleDelete(id)}>
-            Delete
-          </Button>
+          {isAdmin ? (
+            <Button colorScheme="green" onClick={() => handleComplete(id)}>
+              Complete
+            </Button>
+          ) : (
+            <Button colorScheme="red" onClick={() => handleDelete(id)}>
+              Delete
+            </Button>
+          )}
         </CardFooter>
       </Card>
     </Box>
