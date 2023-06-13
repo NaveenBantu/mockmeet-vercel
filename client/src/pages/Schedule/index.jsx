@@ -1,7 +1,5 @@
 import React, { useState, useMemo } from "react";
 import styles from "./styles.module.css";
-// import { Select } from "@chakra-ui/select";
-// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams, useNavigate } from "react-router";
 import useFetch from "../../hooks/useFetch";
@@ -11,12 +9,21 @@ import axios from "axios";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useSearchParams } from "react-router-dom";
-import { Heading } from "@chakra-ui/react";
+import { Heading, useToast } from "@chakra-ui/react";
 
 import dateOptions from "../../utils/dateOptions";
 
 const Schedule = () => {
   const [date, setDate] = useState(new Date());
+
+  // Using Toast to display success or error messages
+  const toast = useToast({
+    position: "top-right",
+    isClosable: true,
+    duration: 3000,
+  });
+
+  // State to manage Interview data
   const [interviewData, setInterviewData] = useState({
     mock_id: "",
     total_score: 0,
@@ -25,11 +32,11 @@ const Schedule = () => {
     interviewer: "",
     bookingDate: "",
   });
+
   const [interviewer, setInterviewer] = useState();
 
   // states for posting interview data
   const [postLoading, setPostLoading] = useState(false);
-  const [postError, setPostError] = useState(false);
 
   // Getting the mockid and score from url query params
   const [searchParams, setSearchParams] = useSearchParams();
@@ -121,10 +128,18 @@ const Schedule = () => {
         `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews`,
         interviewData
       );
+      toast({
+        title: "Interview scheduled",
+        description: "Yayy!, your Mock Interview is scheduled",
+        status: "success",
+      });
       navigate("/upcoming-interviews");
     } catch (error) {
-      console.log("error", error);
-      setPostError(error);
+      toast({
+        title: "Error occured !!!",
+        description: error?.message,
+        status: "error",
+      });
       navigate("/mock-types");
     }
 
