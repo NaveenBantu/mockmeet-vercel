@@ -65,6 +65,23 @@ const UpcomingInterviews = () => {
     setLoading(false);
   };
 
+  const handleCompleteInterview = async (id) => {
+    setLoading(true);
+    const completeInterview = { iscompleted: true };
+    try {
+      const response = await axios.put(
+        `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews/${id}`,
+        completeInterview
+      );
+      // setData(data.filter((item) => item._id !== id));
+      navigate("/feedbacks");
+    } catch (error) {
+      setError(error);
+    }
+
+    setLoading(false);
+  };
+
   return (
     <>
       {loading ? (
@@ -83,6 +100,7 @@ const UpcomingInterviews = () => {
                   isAdmin ? type.student?.name : type.interviewer?.name
                 }
                 handleDelete={handleDeleteInterview}
+                handleComplete={handleCompleteInterview}
                 isAdmin={isAdmin}
               />
             );
