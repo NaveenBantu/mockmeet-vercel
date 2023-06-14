@@ -3,13 +3,19 @@ import InterviewCard from "../../components/InterviewCard";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, CardHeader, Heading } from "@chakra-ui/react";
+import { Button, Card, CardHeader, Heading, useToast } from "@chakra-ui/react";
 import axios from "axios";
 
 const UpcomingInterviews = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+
+  // Using Toast to display success or error messages
+  const toast = useToast({
+    position: "top-right",
+    isClosable: true,
+    duration: 3000,
+  });
 
   const navigate = useNavigate();
   const { user, isLoaded, isSignedIn } = useUser();
@@ -38,7 +44,12 @@ const UpcomingInterviews = () => {
       );
       setData(res.data);
     } catch (err) {
-      setError(err);
+      console.log("error in fetch ", err);
+      toast({
+        title: "Error occured !!!",
+        description: err?.message,
+        status: "error",
+      });
     }
     setLoading(false);
   };
@@ -58,8 +69,17 @@ const UpcomingInterviews = () => {
         `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews/${id}`
       );
       setData(data.filter((item) => item._id !== id));
+      toast({
+        title: "Interview Deleted",
+        description: response?.data,
+        status: "success",
+      });
     } catch (error) {
-      setError(error);
+      toast({
+        title: "Error occured !!!",
+        description: error?.message,
+        status: "error",
+      });
     }
 
     setLoading(false);
@@ -74,9 +94,19 @@ const UpcomingInterviews = () => {
         completeInterview
       );
       // setData(data.filter((item) => item._id !== id));
+      toast({
+        title: "Interview Completed",
+        description: response?.data,
+        status: "success",
+      });
       navigate("/feedbacks");
     } catch (error) {
-      setError(error);
+      console.log("error");
+      toast({
+        title: "Error occured !!!",
+        description: error?.message,
+        status: "error",
+      });
     }
 
     setLoading(false);

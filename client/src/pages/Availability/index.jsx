@@ -4,11 +4,10 @@ import {
   Box,
   Button,
   Card,
-  FormControl,
   HStack,
   Heading,
-  Select,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,25 +16,28 @@ import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 
 import LoadingSpinner from "../../components/LoadingSpinner";
-import { useAuth, useUser } from "@clerk/clerk-react";
+import { useAuth } from "@clerk/clerk-react";
 
 const Availability = () => {
   const [date, setDate] = useState(new Date());
-
   const [putLoading, setPutLoading] = useState(false);
-  const [putError, setPutError] = useState(false);
 
-  // const [availableDates, setAvailableDates] = useState([]);
+  // Using Toast to display success or error messages
+  const toast = useToast({
+    position: "top-right",
+    isClosable: true,
+    duration: 3000,
+  });
 
+  // State to manage interviewer data
   const [interviewerData, setInterviewerData] = useState({
     level: 0,
     availableDates: [],
     clerk_id: "",
   });
-  const [mock, setMock] = useState("");
 
+  // Check if the User is authenticated using Clerk hooks
   const { isLoaded, isSignedIn, userId } = useAuth();
-  const { user } = useUser();
   const navigate = useNavigate();
 
   // In case the user signs out while on the page.
@@ -43,7 +45,7 @@ const Availability = () => {
     navigate("/sign-in");
   }
 
-  // // Fetching the mocks
+  // Fetching the mocks
   const { data, loading, error } = useFetch(
     `${import.meta.env.VITE_REACT_API_URL}/mocks`
   );
@@ -51,8 +53,6 @@ const Availability = () => {
   const handleDateChange = (date) => {
     // Setting the date on change of the date picker
     setDate(date);
-
-    console.log("date change ", date);
   };
 
   const handleLevelChange = (event) => {
@@ -70,7 +70,7 @@ const Availability = () => {
   };
 
   const handleSubmit = async (e) => {
-    // prevent the default form submit
+    // prevent the default form submission
     e.preventDefault();
 
     // submitting the form
@@ -80,8 +80,17 @@ const Availability = () => {
         `${import.meta.env.VITE_REACT_API_URL}/users/update`,
         interviewerData
       );
+      toast({
+        title: "Dates added",
+        description: "Your available dates are added",
+        status: "success",
+      });
     } catch (error) {
-      setPutError(error);
+      toast({
+        title: "Error occured !!!",
+        description: error?.message,
+        status: "error",
+      });
     }
     setPutLoading(false);
     navigate("/");
@@ -97,6 +106,7 @@ const Availability = () => {
     }
   };
 
+  // Filter old Date and Time
   const filterPassedTime = (time) => {
     const currentDate = new Date();
     const selectedDate = new Date(time);
@@ -106,7 +116,6 @@ const Availability = () => {
 
   // Handle function to delete the date in the list
   const handleDelete = (e, index) => {
-    // e.preventDefault();
     const updatedItems = [...interviewerData.availableDates];
     updatedItems.splice(index, 1);
     setInterviewerData((prevInterviewData) => ({
