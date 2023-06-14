@@ -8,7 +8,7 @@ import axios from "axios";
 
 const UpcomingInterviews = () => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Using Toast to display success or error messages
   const toast = useToast({
@@ -44,7 +44,6 @@ const UpcomingInterviews = () => {
       );
       setData(res.data);
     } catch (err) {
-      console.log("error in fetch ", err);
       toast({
         title: "Error occured !!!",
         description: err?.message,
@@ -71,7 +70,7 @@ const UpcomingInterviews = () => {
       setData(data.filter((item) => item._id !== id));
       toast({
         title: "Interview Deleted",
-        description: response?.data,
+        description: "Deleted interview",
         status: "success",
       });
     } catch (error) {
@@ -96,7 +95,7 @@ const UpcomingInterviews = () => {
       // setData(data.filter((item) => item._id !== id));
       toast({
         title: "Interview Completed",
-        description: response?.data,
+        description: "Please add the feedback",
         status: "success",
       });
       navigate("/feedbacks");

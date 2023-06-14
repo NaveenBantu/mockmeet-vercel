@@ -17,6 +17,7 @@ import axios from "axios";
 
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useAuth } from "@clerk/clerk-react";
+import dateOptions from "../../utils/dateOptions";
 
 const Availability = () => {
   const [date, setDate] = useState(new Date());
@@ -124,99 +125,96 @@ const Availability = () => {
     }));
   };
 
-  // Date formatting options
-  const dateOptions = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  };
-
   return (
     <>
       {loading || putLoading ? (
         <LoadingSpinner />
       ) : (
-        <Box
-          display="flex"
-          borderWidth="2px"
-          borderRadius="lg"
-          margin="1rem"
-          padding="1rem"
-        >
-          <form onSubmit={handleSubmit} className={styles.form}>
-            <Heading>Availability</Heading>
-            {/* Select level */}
-            <select
-              onChange={handleLevelChange}
-              required
-              className={styles.select}
-            >
-              <option value={0}>Select Level</option>
-              {data?.map((mock) => (
-                <option key={mock?._id} value={mock?.level}>
-                  {mock?.title}
-                </option>
-              ))}
-            </select>
+        <>
+          <Heading m={4}>Availability</Heading>
+          <Box
+            display="flex"
+            borderWidth="2px"
+            borderRadius="lg"
+            margin="1rem"
+            padding="1rem"
+          >
+            <form onSubmit={handleSubmit} className={styles.form}>
+              {/* Select level */}
+              <select
+                onChange={handleLevelChange}
+                required
+                className={styles.select}
+              >
+                <option value={0}>Select Level</option>
+                {data?.map((mock) => (
+                  <option key={mock?._id} value={mock?.level}>
+                    {mock?.title}
+                  </option>
+                ))}
+              </select>
 
-            {/* Datepicker */}
-            <div className={styles["datepicker-container"]}>
-              <DatePicker
-                className={styles["custom-datepicker"]}
-                selected={date}
-                onChange={handleDateChange}
-                filterTime={filterPassedTime}
-                showTimeSelect
-                dateFormat="MMMM d, yyyy h:mm aa"
-                placeholderText="Select a date"
-              />
-            </div>
+              {/* Datepicker */}
+              <div className={styles["datepicker-container"]}>
+                <DatePicker
+                  className={styles["custom-datepicker"]}
+                  selected={date}
+                  onChange={handleDateChange}
+                  filterTime={filterPassedTime}
+                  showTimeSelect
+                  dateFormat="MMMM d, yyyy h:mm aa"
+                  placeholderText="Select a date"
+                />
+              </div>
 
-            {/* Button to add the time */}
-            <Button
-              backgroundColor="black"
-              onClick={handleTimeChange}
-              m={2}
-              color="#faa621"
-            >
-              Add Time
-            </Button>
+              {/* Button to add the time */}
+              <Button
+                backgroundColor="black"
+                onClick={handleTimeChange}
+                m={2}
+                color="#faa621"
+              >
+                Add Time
+              </Button>
 
-            {/* List of Added Availability times */}
-            <ul>
-              {interviewerData.availableDates?.map((date, index) => {
-                return (
-                  <Card
-                    key={index}
-                    variant={"elevated"}
-                    p={4}
-                    background="black"
-                    color="gray.200"
-                    my={2}
-                  >
-                    <HStack spacing={8} justifyContent="space-between">
-                      <Text as="b" key={index}>
-                        {new Date(date).toLocaleString("en-US", dateOptions)}
-                      </Text>
-                      <Button
-                        onClick={() => handleDelete(index)}
-                        colorScheme="red"
-                      >
-                        Delete
-                      </Button>
-                    </HStack>
-                  </Card>
-                );
-              })}
-            </ul>
-            <Button backgroundColor="black" color="#faa621" type="submit" m={2}>
-              Add Interview Slots
-            </Button>
-          </form>
-        </Box>
+              {/* List of Added Availability times */}
+              <ul>
+                {interviewerData.availableDates?.map((date, index) => {
+                  return (
+                    <Card
+                      key={index}
+                      variant={"elevated"}
+                      p={4}
+                      background="black"
+                      color="gray.200"
+                      my={2}
+                    >
+                      <HStack spacing={8} justifyContent="space-between">
+                        <Text as="b" key={index}>
+                          {new Date(date).toLocaleString("en-US", dateOptions)}
+                        </Text>
+                        <Button
+                          onClick={() => handleDelete(index)}
+                          colorScheme="red"
+                        >
+                          Delete
+                        </Button>
+                      </HStack>
+                    </Card>
+                  );
+                })}
+              </ul>
+              <Button
+                backgroundColor="black"
+                color="#faa621"
+                type="submit"
+                m={2}
+              >
+                Add Interview Slots
+              </Button>
+            </form>
+          </Box>
+        </>
       )}
     </>
   );

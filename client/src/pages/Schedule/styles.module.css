@@ -116,11 +116,10 @@
 
 /* Dropdown Styling */
 .select {
-  margin-top: 2rem;
   appearance: none;
   width: 80%;
   height: 40px;
-  padding: 10px;
+  padding-left: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
