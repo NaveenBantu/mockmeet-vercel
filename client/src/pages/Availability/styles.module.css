@@ -62,17 +62,16 @@
 
 /* Dropdown Styling */
 select {
-  margin-top: 2rem;
   appearance: none;
   width: 80%;
   height: 40px;
-  padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #fff;
   box-sizing: border-box;
   transition: border-color 0.2s ease-in-out;
+  padding-left: 0.5rem;
 }
 
 select:focus {
