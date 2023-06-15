@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useToast } from "@chakra-ui/react";
 
 const useFetch = (url) => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  // Using Toast to display success or error messages
+  const toast = useToast({
+    position: "top-right",
+    isClosable: true,
+    duration: 3000,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +35,11 @@ const useFetch = (url) => {
       setData(res.data);
     } catch (err) {
       setError(err);
+      toast({
+        title: "Error occured !!!",
+        description: err?.message,
+        status: "error",
+      });
     }
     setLoading(false);
   };
@@ -39,6 +52,11 @@ const useFetch = (url) => {
       setData(response.data);
     } catch (error) {
       setError(error);
+      toast({
+        title: "Error occured !!!",
+        description: error?.message,
+        status: "error",
+      });
     }
 
     setLoading(false);
