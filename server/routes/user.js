@@ -6,7 +6,7 @@ import {
   getUser,
   getUsers,
   getInterviewers,
-  getUserInterviews,
+  // getUserInterviews,
 } from "../controllers/user.js";
 
 const router = express.Router();
