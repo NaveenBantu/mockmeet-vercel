@@ -15,11 +15,11 @@ import UserRoute from "./routes/user.js";
 // Importing database connection function
 import db from "./config/db.js";
 
-// Middleware from Clerk for protecting th routes
-import clerk, {
-  ClerkExpressRequireAuth,
-  ClerkExpressWithAuth,
-} from "@clerk/clerk-sdk-node";
+// Middleware from Clerk for protecting the routes
+// import clerk, {
+//   ClerkExpressRequireAuth,
+//   ClerkExpressWithAuth,
+// } from "@clerk/clerk-sdk-node";
 
 // Inititalizing App
 const app = express();
