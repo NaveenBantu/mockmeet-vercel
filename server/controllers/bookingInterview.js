@@ -1,7 +1,14 @@
 import Interview from "../models/Bookinginterview.js";
 import User from "../models/User.js";
 
-//create new interview
+/**
+ * @desc    Create new Interview
+ * @route   POST /api/bookinginterviews
+ * @access  Private
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const createInterview = async (req, res, next) => {
   const { student_id, ...restDetails } = req.body;
 
@@ -35,7 +42,15 @@ export const createInterview = async (req, res, next) => {
     next(err);
   }
 };
-// update Interview
+
+/**
+ * @desc    Update Interview
+ * @route   PUT /api/bookinginterviews/:id
+ * @access  Private
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const updateInterview = async (req, res, next) => {
   try {
     const updatedInterview = await Interview.findByIdAndUpdate(
@@ -48,6 +63,15 @@ export const updateInterview = async (req, res, next) => {
     next(err);
   }
 };
+
+/**
+ * @desc    Delete Interview
+ * @route   POST /api/bookinginterviews/:id
+ * @access  Private
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const deleteInterview = async (req, res, next) => {
   try {
     const deletedInterview = await Interview.findOneAndDelete(req.params.id);
@@ -67,7 +91,15 @@ export const deleteInterview = async (req, res, next) => {
     next(err);
   }
 };
-//Get Interview
+
+/**
+ * @desc    Get a particular Interview
+ * @route   GET /api/bookinginterviews/:id
+ * @access  Private
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const getInterview = async (req, res, next) => {
   try {
     const interview = await Interview.findById(req.params.id);
@@ -76,7 +108,15 @@ export const getInterview = async (req, res, next) => {
     next(err);
   }
 };
-// get all Interview of user
+
+/**
+ * @desc    Get all interviews of a User
+ * @route   GET /api/bookinginterviews/user/:role/:userID
+ * @access  Private
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const getInterviews = async (req, res, next) => {
   const { role, userID } = req.params;
   const complete = !(req.query.complete === "false");

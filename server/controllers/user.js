@@ -2,6 +2,14 @@
 import User from "../models/User.js";
 import Interview from "../models/Bookinginterview.js";
 
+/**
+ * @desc    Create new User
+ * @route   POST /api/bookinginterviews
+ * @access  Private
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const createUser = async (req, res, next) => {
   const { data } = req.body;
   const { first_name, last_name, id, image_url, email_addresses } = data;
@@ -32,7 +40,14 @@ export const createUser = async (req, res, next) => {
   }
 };
 
-// UPDATE User
+/**
+ * @desc    Update User
+ * @route   PUT /api/users/:id
+ * @access  Private
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const updateUser = async (req, res, next) => {
   const { clerk_id, availableDates } = req.body;
   try {
@@ -47,12 +62,18 @@ export const updateUser = async (req, res, next) => {
   }
 };
 
-// Deleting User
+/**
+ * @desc    Delete User
+ * @route   DELETE /api/users/:id
+ * @access  Private
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const deleteUser = async (req, res, next) => {
   const { data } = req.body;
   const { deleted, id } = data;
 
-  // const mockId = req.params.mockid;
   try {
     if (deleted) {
       const deletedUser = await User.findOneAndDelete({ clerk_id: id });
@@ -63,7 +84,14 @@ export const deleteUser = async (req, res, next) => {
   }
 };
 
-// GET User
+/**
+ * @desc    Get Users
+ * @route   GET /api/users
+ * @access  Private
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
@@ -73,7 +101,15 @@ export const getUser = async (req, res, next) => {
   }
 };
 
-// Get all Interviewers
+/**
+ * @desc    Get all Interviewers
+ * Filter and send all the Users who are interviewers
+ * @route   GET /api/users/interviewer
+ * @access  Private
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const getInterviewers = async (req, res, next) => {
   try {
     const interviewers = await User.find({ isInterviewer: true });
@@ -187,17 +223,17 @@ export const getUsers = async (req, res, next) => {
 };
 
 // Get the Interviews list associated for a user by student_id from BookingInterview model
-
-export const getUserInterviews = async (req, res, next) => {
-  try {
-    let queryObj = {};
-    if (req.query.iscompleted) {
-      queryObj.iscompleted = req.query.iscompleted;
-    }
-    queryObj.student_id = req.params.id;
-    const userInterviews = await Interview.find(queryObj);
-    res.status(200).json(userInterviews);
-  } catch (err) {
-    next(err);
-  }
-};
+// Currently handled in the bookinginterview controller
+// export const getUserInterviews = async (req, res, next) => {
+//   try {
+//     let queryObj = {};
+//     if (req.query.iscompleted) {
+//       queryObj.iscompleted = req.query.iscompleted;
+//     }
+//     queryObj.student_id = req.params.id;
+//     const userInterviews = await Interview.find(queryObj);
+//     res.status(200).json(userInterviews);
+//   } catch (err) {
+//     next(err);
+//   }
+// };
