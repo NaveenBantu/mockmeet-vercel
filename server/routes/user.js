@@ -29,7 +29,7 @@ router.get("/interviewer", getInterviewers);
 //GEt particular User
 router.get("/:id", getUser);
 
-//Get all interviews of a particular user
-router.get("/:id/interviews", getUserInterviews);
+// //Get all interviews of a particular user
+// router.get("/:id/interviews", getUserInterviews);
 
 export default router;

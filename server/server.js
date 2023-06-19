@@ -9,21 +9,17 @@ import "dotenv/config";
 
 // Importing Routes
 import mocksRoute from "./routes/mocks.js";
-import interviewerRoute from "./routes/interviewers.js";
 import BookinginterviewRoute from "./routes/bookinginterview.js";
 import UserRoute from "./routes/user.js";
 
 // Importing database connection function
 import db from "./config/db.js";
 
+// Middleware from Clerk for protecting th routes
 import clerk, {
   ClerkExpressRequireAuth,
   ClerkExpressWithAuth,
 } from "@clerk/clerk-sdk-node";
-
-// const userList = await clerk.users.getUserList();
-
-// console.log(userList);
 
 // Inititalizing App
 const app = express();
@@ -48,7 +44,6 @@ app.use(express.json());
 //   res.send(req.auth);
 // });
 app.use("/api/mocks", mocksRoute);
-app.use("/api/interviewers", interviewerRoute);
 app.use("/api/bookinginterviews", BookinginterviewRoute);
 app.use("/api/users", UserRoute);
 

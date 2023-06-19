@@ -1,6 +1,13 @@
 import Mock from "../models/Mock.js";
 
-// Creating Mock Interview Type
+/**
+ * @desc    Create new Mock Type
+ * @route   POST /api/mocks
+ * @access  Private
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const createMock = async (req, res, next) => {
   const newMock = new Mock(req.body);
 
@@ -12,7 +19,14 @@ export const createMock = async (req, res, next) => {
   }
 };
 
-// Updating Mock interview
+/**
+ * @desc    Update Mock Type
+ * @route   PUT /api/mocks/:id
+ * @access  Private
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const updateMock = async (req, res, next) => {
   try {
     const updatedMock = await Mock.findByIdAndUpdate(
@@ -26,7 +40,14 @@ export const updateMock = async (req, res, next) => {
   }
 };
 
-// Deleting Mock interview
+/**
+ * @desc    Delete Mock Type
+ * @route   DELETE /api/mocks/:id
+ * @access  Private
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const deleteMock = async (req, res, next) => {
   try {
     const deletedMock = await Mock.findByIdAndDelete(req.params.id);
@@ -36,7 +57,14 @@ export const deleteMock = async (req, res, next) => {
   }
 };
 
-// Get a particular Mock Interviews
+/**
+ * @desc    Get a particular Mock Type
+ * @route   GET /api/mocks/:id
+ * @access  Private
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const getMock = async (req, res, next) => {
   try {
     await Mock.findById(req.params.id).then((mock) => {
@@ -47,7 +75,14 @@ export const getMock = async (req, res, next) => {
   }
 };
 
-// Get all Mock Interviews
+/**
+ * @desc    Get all Mock Interviews
+ * @route   GET /api/mocks
+ * @access  Public
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 export const getMocks = async (req, res, next) => {
   try {
     Mock.find()
