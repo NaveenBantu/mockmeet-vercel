@@ -16,11 +16,12 @@ import {
 } from "@chakra-ui/react";
 
 import styles from "./styles.module.css";
-import { useUser } from "@clerk/clerk-react";
+import { useAuth, useUser } from "@clerk/clerk-react";
 import useFetch from "../../hooks/useFetch";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useState } from "react";
 import axios from "axios";
+import api, { setAccessToken } from "../../utils/apiCall";
 
 const FeedbackList = ({ data }) => {
   return (
@@ -87,13 +88,21 @@ const FeedbackForm = ({ data }) => {
     setID(value);
   };
 
+  const { getToken } = useAuth();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission logic here
     console.log(formData);
     // submitting the form
     try {
-      const response = await axios.put(
+      // Retrieve the Clerk access token
+      const token = await getToken();
+      // Set the access token in the API instance
+      setAccessToken(token);
+
+      // Updating the interview
+      const response = await api.put(
         `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews/${id}`,
         formData
       );

@@ -1,14 +1,6 @@
 import Card from "../../components/Card";
-import {
-  CalendarIcon,
-  SunIcon,
-  ChatIcon,
-  AttachmentIcon,
-} from "@chakra-ui/icons";
-
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
 import { Heading } from "@chakra-ui/react";
 import {
   FaBookReader,
@@ -17,6 +9,8 @@ import {
   FaCommentAlt,
   FaTrophy,
 } from "react-icons/fa";
+import { useEffect } from "react";
+import api, { setAccessToken } from "../../utils/apiCall";
 
 const Dashboard = () => {
   const { user, isLoaded, isSignedIn } = useUser();
@@ -29,7 +23,8 @@ const Dashboard = () => {
     navigate("/sign-in");
   }
 
-  const isAdmin = emailAddress?.includes("hashinsert");
+  // Check for a hashinsert email (Validation check)
+  const isAdmin = emailAddress?.includes("@hashinsert.com");
 
   return (
     <>
