@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 // New way of configuring dotenv package in the app
 import "dotenv/config";
+import path from "path";
 
 // Old way of configuring dotenv
 // import dotenv from "dotenv";
@@ -14,6 +15,8 @@ import UserRoute from "./routes/user.js";
 
 // Importing database connection function
 import db from "./config/db.js";
+
+import { ClerkExpressWithAuth } from "@clerk/clerk-sdk-node";
 
 // Middleware from Clerk for protecting the routes
 // import clerk, {
@@ -39,13 +42,13 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-// app.use("/api/user", ClerkExpressWithAuth(), (req, res) => {
-//   console.log(req.auth);
-//   res.send(req.auth);
-// });
-app.use("/api/mocks", mocksRoute);
-app.use("/api/bookinginterviews", BookinginterviewRoute);
-app.use("/api/users", UserRoute);
+app.use("/api/mocks", ClerkExpressWithAuth(), mocksRoute);
+app.use(
+  "/api/bookinginterviews",
+  ClerkExpressWithAuth(),
+  BookinginterviewRoute
+);
+app.use("/api/users", ClerkExpressWithAuth(), UserRoute);
 
 // Error handling
 app.use((err, req, res, next) => {

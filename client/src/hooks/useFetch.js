@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { useToast } from "@chakra-ui/react";
+import api, { setAccessToken } from "../utils/apiCall";
+import { useAuth } from "@clerk/clerk-react";
 
 const useFetch = (url) => {
   const [data, setData] = useState([]);
@@ -14,11 +16,19 @@ const useFetch = (url) => {
     duration: 3000,
   });
 
+  const { getToken } = useAuth();
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(url);
+        // Retrieve the Clerk access token
+        const token = await getToken();
+        // Set the access token in the API instance
+        setAccessToken(token);
+
+        // Fetch data
+        const res = await api.get(url);
         setData(res.data);
       } catch (err) {
         setError(err);
@@ -31,7 +41,13 @@ const useFetch = (url) => {
   const reFetch = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(url);
+      // Retrieve the Clerk access token
+      const token = await getToken();
+      // Set the access token in the API instance
+      setAccessToken(token);
+
+      // Fetch data
+      const res = await api.get(url);
       setData(res.data);
     } catch (err) {
       setError(err);
@@ -48,7 +64,13 @@ const useFetch = (url) => {
     setLoading(true);
 
     try {
-      const response = await axios.post(url, postData);
+      // Retrieve the Clerk access token
+      const token = await getToken();
+      // Set the access token in the API instance
+      setAccessToken(token);
+
+      // Fetch data
+      const response = await api.post(url, postData);
       setData(response.data);
     } catch (error) {
       setError(error);

@@ -1,6 +1,5 @@
 import { Route, Routes, useNavigate } from "react-router";
 import Dashboard from "./pages/Dashboard";
-// import Home from "./pages/Home";
 import MockTypes from "./pages/MockTypes";
 import Leaderboard from "./pages/Leaderboard";
 import UpcomingInterviews from "./pages/UpcomingInterviews";
@@ -79,7 +78,6 @@ function App() {
           <Route path="/feedbacks" element={<Feedback />}></Route>
           <Route path="/resources" element={<Resources />}></Route>
           <Route path="/resource/:name" element={<Resource />}></Route>
-          {/* <Route path="/admin" element={<AdminDashboard />}></Route> */}
           <Route path="/availability" element={<Availability />}></Route>
           <Route path="/leaderboard" element={<Leaderboard />}></Route>
         </Routes>

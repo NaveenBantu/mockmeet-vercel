@@ -18,6 +18,7 @@ import axios from "axios";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useAuth } from "@clerk/clerk-react";
 import dateOptions from "../../utils/dateOptions";
+import api, { setAccessToken } from "../../utils/apiCall";
 
 const Availability = () => {
   const [date, setDate] = useState(new Date());
@@ -45,6 +46,9 @@ const Availability = () => {
   if (!isLoaded || !isSignedIn) {
     navigate("/sign-in");
   }
+
+  // Getting the Token from useAuth hook
+  const { getToken } = useAuth();
 
   // Fetching the mocks
   const { data, loading, error } = useFetch(
@@ -77,7 +81,13 @@ const Availability = () => {
     // submitting the form
     setPutLoading(true);
     try {
-      const response = await axios.put(
+      // Retrieve the Clerk access token
+      const token = await getToken();
+      // Set the access token in the API instance
+      setAccessToken(token);
+
+      // Update the interview data
+      const response = await api.put(
         `${import.meta.env.VITE_REACT_API_URL}/users/update`,
         interviewerData
       );

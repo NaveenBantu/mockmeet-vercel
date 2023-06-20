@@ -12,6 +12,7 @@ import { useSearchParams } from "react-router-dom";
 import { Heading, useToast } from "@chakra-ui/react";
 
 import dateOptions from "../../utils/dateOptions";
+import api, { setAccessToken } from "../../utils/apiCall";
 
 const Schedule = () => {
   const [date, setDate] = useState(new Date());
@@ -44,7 +45,7 @@ const Schedule = () => {
   const mockId = searchParams?.get("mockId");
   const level = searchParams?.get("level");
 
-  const { isLoaded, isSignedIn, userId } = useAuth();
+  const { isLoaded, isSignedIn, userId, getToken } = useAuth();
   const navigate = useNavigate();
 
   // In case the user signs out while on the page.
@@ -124,7 +125,13 @@ const Schedule = () => {
     setPostLoading(true);
 
     try {
-      const response = await axios.post(
+      // Retrieve the Clerk access token
+      const token = await getToken();
+      // Set the access token in the API instance
+      setAccessToken(token);
+
+      // Create interview
+      const response = await api.post(
         `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews`,
         interviewData
       );

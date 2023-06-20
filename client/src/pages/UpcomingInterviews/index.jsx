@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import InterviewCard from "../../components/InterviewCard";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import { useUser } from "@clerk/clerk-react";
+import { useAuth, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, CardHeader, Heading, useToast } from "@chakra-ui/react";
 import axios from "axios";
+import { parseISO } from "date-fns";
+import api, { setAccessToken } from "../../utils/apiCall";
 
 const UpcomingInterviews = () => {
   const [data, setData] = useState([]);
@@ -19,6 +21,7 @@ const UpcomingInterviews = () => {
 
   const navigate = useNavigate();
   const { user, isLoaded, isSignedIn } = useUser();
+  const { getToken } = useAuth();
 
   if (!isLoaded || !isSignedIn) {
     navigate("/sign-in");
@@ -37,11 +40,22 @@ const UpcomingInterviews = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(
+      // Retrieve the Clerk access token
+      const token = await getToken();
+      // Set the access token in the API instance
+      setAccessToken(token);
+
+      // Get upcoming interviews
+      const res = await api.get(
         `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews/user/${
           isAdmin ? "i" : "s"
         }/${userID}?complete=false`
       );
+      // const filteredData = res?.data.filter((item) => {
+      //   console.log("booking date ", parseISO(item.bookingDate) >= new Date());
+      //   return parseISO(item.bookingDate) >= new Date();
+      // });
+      // console.log("upcoming ", filteredData);
       setData(res.data);
     } catch (err) {
       toast({
@@ -64,7 +78,13 @@ const UpcomingInterviews = () => {
   const handleDeleteInterview = async (id) => {
     setLoading(true);
     try {
-      const response = await axios.delete(
+      // Retrieve the Clerk access token
+      const token = await getToken();
+      // Set the access token in the API instance
+      setAccessToken(token);
+
+      // Delete interview
+      const response = await api.delete(
         `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews/${id}`
       );
       setData(data.filter((item) => item._id !== id));
@@ -88,7 +108,13 @@ const UpcomingInterviews = () => {
     setLoading(true);
     const completeInterview = { iscompleted: true };
     try {
-      const response = await axios.put(
+      // Retrieve the Clerk access token
+      const token = await getToken();
+      // Set the access token in the API instance
+      setAccessToken(token);
+
+      // Update interview
+      const response = await api.put(
         `${import.meta.env.VITE_REACT_API_URL}/bookinginterviews/${id}`,
         completeInterview
       );
