@@ -13,9 +13,6 @@ import mocksRoute from "./routes/mocks.js";
 import BookinginterviewRoute from "./routes/bookinginterview.js";
 import UserRoute from "./routes/user.js";
 
-// Importing database connection function
-import db from "./config/db.js";
-
 import { ClerkExpressWithAuth } from "@clerk/clerk-sdk-node";
 
 // Middleware from Clerk for protecting the routes
@@ -27,15 +24,15 @@ import { ClerkExpressWithAuth } from "@clerk/clerk-sdk-node";
 // Inititalizing App
 const app = express();
 
-// Connect to the database
-db.once("open", () => {
-  console.log("Connected to database");
-});
+// // Connect to the database
+// db.once("open", () => {
+//   console.log("Connected to database");
+// });
 
-// Handle database connection errors
-db.on("error", (err) => {
-  console.log("Database error:", err);
-});
+// // Handle database connection errors
+// db.on("error", (err) => {
+//   console.log("Database error:", err);
+// });
 
 //Middlewares
 app.use(cors());
