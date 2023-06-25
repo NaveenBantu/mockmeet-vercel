@@ -10,8 +10,8 @@ import {
   ListItemText,
   Container,
   Typography,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+} from "../../../node_modules/@mui/material";
+import ExpandMoreIcon from "../../../node_modules/@mui/icons-material/ExpandMore";
 
 function Accordion_list(props) {
   let obj = props.data;
