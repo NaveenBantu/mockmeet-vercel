@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
 // New way of configuring dotenv package in the app
 import "dotenv/config";
-import path from "path";
 
 // Old way of configuring dotenv
 // import dotenv from "dotenv";
@@ -13,13 +13,9 @@ import mocksRoute from "./routes/mocks.js";
 import BookinginterviewRoute from "./routes/bookinginterview.js";
 import UserRoute from "./routes/user.js";
 
-import { ClerkExpressWithAuth } from "@clerk/clerk-sdk-node";
-
 // Middleware from Clerk for protecting the routes
-// import clerk, {
-//   ClerkExpressRequireAuth,
-//   ClerkExpressWithAuth,
-// } from "@clerk/clerk-sdk-node";
+import { ClerkExpressWithAuth } from "@clerk/clerk-sdk-node";
+import errorHandler from "./utils/error.js";
 
 // Inititalizing App
 const app = express();
@@ -48,16 +44,7 @@ app.use(
 app.use("/api/users", ClerkExpressWithAuth(), UserRoute);
 
 // Error handling
-app.use((err, req, res, next) => {
-  const errorStatus = err.status || 500;
-  const errorMessage = err.message || "Something went wrong!";
-  return res.status(errorStatus).json({
-    success: false,
-    status: errorStatus,
-    message: errorMessage,
-    stack: err.stack,
-  });
-});
+app.use(errorHandler);
 
 //* Serve static assets in production, must be at this location of this file
 if (process.env.NODE_ENV === "production") {
