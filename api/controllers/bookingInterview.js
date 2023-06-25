@@ -1,4 +1,3 @@
-import connectDB from "../config/db.js";
 import Interview from "../models/Bookinginterview.js";
 import User from "../models/User.js";
 
@@ -11,9 +10,6 @@ import User from "../models/User.js";
  * @param {*} next
  */
 export const createInterview = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   const { student_id, ...restDetails } = req.body;
 
   // When the Student schedules an Interview,
@@ -56,9 +52,6 @@ export const createInterview = async (req, res, next) => {
  * @param {*} next
  */
 export const updateInterview = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   try {
     const updatedInterview = await Interview.findByIdAndUpdate(
       req.params.id,
@@ -80,9 +73,6 @@ export const updateInterview = async (req, res, next) => {
  * @param {*} next
  */
 export const deleteInterview = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   try {
     const deletedInterview = await Interview.findOneAndDelete(req.params.id);
     // Add the booking date to interviewer available dates after deleting the interview
@@ -111,9 +101,6 @@ export const deleteInterview = async (req, res, next) => {
  * @param {*} next
  */
 export const getInterview = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   try {
     const interview = await Interview.findById(req.params.id);
     res.status(200).json(interview);
@@ -131,9 +118,6 @@ export const getInterview = async (req, res, next) => {
  * @param {*} next
  */
 export const getInterviews = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   const { role, userID } = req.params;
   const complete = !(req.query.complete === "false");
   try {

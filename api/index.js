@@ -21,15 +21,9 @@ import dbMiddleware from "./config/db-middleware.js";
 // Inititalizing App
 const app = express();
 
-// // Connect to the database
-// db.once("open", () => {
-//   console.log("Connected to database");
-// });
-
-// // Handle database connection errors
-// db.on("error", (err) => {
-//   console.log("Database error:", err);
-// });
+// Define to the database middleware
+// This enables connection to Database on every request
+// Required for Vercel Serverless function
 
 const connectToMongoDB = (req, res, next) => {
   req.db = dbMiddleware;

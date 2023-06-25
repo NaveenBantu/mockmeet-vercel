@@ -1,4 +1,3 @@
-import connectDB from "../config/db.js";
 import Mock from "../models/Mock.js";
 
 /**
@@ -10,9 +9,6 @@ import Mock from "../models/Mock.js";
  * @param {*} next
  */
 export const createMock = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   const newMock = new Mock(req.body);
 
   try {
@@ -32,9 +28,6 @@ export const createMock = async (req, res, next) => {
  * @param {*} next
  */
 export const updateMock = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   try {
     const updatedMock = await Mock.findByIdAndUpdate(
       req.params.id,
@@ -56,9 +49,6 @@ export const updateMock = async (req, res, next) => {
  * @param {*} next
  */
 export const deleteMock = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   try {
     const deletedMock = await Mock.findByIdAndDelete(req.params.id);
     res.status(200).json("Mock has been deleted.");
@@ -76,9 +66,6 @@ export const deleteMock = async (req, res, next) => {
  * @param {*} next
  */
 export const getMock = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   try {
     await Mock.findById(req.params.id).then((mock) => {
       res.status(200).json(mock);
@@ -97,9 +84,6 @@ export const getMock = async (req, res, next) => {
  * @param {*} next
  */
 export const getMocks = async (req, res, next) => {
-  // Connecting to mongoDB
-  // connectDB();
-
   try {
     Mock.find()
       .sort({ level: 1 })

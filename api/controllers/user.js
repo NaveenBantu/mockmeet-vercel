@@ -1,7 +1,5 @@
 // This function handles CRUD of User data.
 import User from "../models/User.js";
-import Interview from "../models/Bookinginterview.js";
-import connectDB from "../config/db.js";
 
 /**
  * @desc    Create new User
@@ -12,9 +10,6 @@ import connectDB from "../config/db.js";
  * @param {*} next
  */
 export const createUser = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   const { data } = req.body;
   const { first_name, last_name, id, image_url, email_addresses } = data;
   const email_addr = email_addresses[0].email_address;
@@ -53,9 +48,6 @@ export const createUser = async (req, res, next) => {
  * @param {*} next
  */
 export const updateUser = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   const { clerk_id, availableDates } = req.body;
   try {
     const updatedUser = await User.findOneAndUpdate(
@@ -78,9 +70,6 @@ export const updateUser = async (req, res, next) => {
  * @param {*} next
  */
 export const deleteUser = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   const { data } = req.body;
   const { deleted, id } = data;
 
@@ -103,9 +92,6 @@ export const deleteUser = async (req, res, next) => {
  * @param {*} next
  */
 export const getUser = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   try {
     const user = await User.findById(req.params.id);
     res.status(200).json(user);
@@ -124,9 +110,6 @@ export const getUser = async (req, res, next) => {
  * @param {*} next
  */
 export const getInterviewers = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   try {
     const interviewers = await User.find({ isInterviewer: true });
     res.status(200).json(interviewers);
@@ -137,9 +120,6 @@ export const getInterviewers = async (req, res, next) => {
 
 // Get all Users
 export const getUsers = async (req, res, next) => {
-  // Connecting to mongoDB
-  connectDB();
-
   try {
     // we can search using these queries
     // like
