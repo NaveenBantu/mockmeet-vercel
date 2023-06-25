@@ -16,6 +16,7 @@ import UserRoute from "./routes/user.js";
 // Middleware from Clerk for protecting the routes
 import { ClerkExpressWithAuth } from "@clerk/clerk-sdk-node";
 import errorHandler from "./utils/error.js";
+import dbMiddleware from "./config/db-middleware.js";
 
 // Inititalizing App
 const app = express();
@@ -30,9 +31,17 @@ const app = express();
 //   console.log("Database error:", err);
 // });
 
+const connectToMongoDB = (req, res, next) => {
+  req.db = dbMiddleware;
+  console.log("using the db middleware", dbMiddleware.host);
+  next();
+};
+
 //Middlewares
 app.use(cors());
 app.use(express.json());
+
+app.use(connectToMongoDB);
 
 // Routes
 app.use("/api/mocks", ClerkExpressWithAuth(), mocksRoute);

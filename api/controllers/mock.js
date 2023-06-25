@@ -98,7 +98,7 @@ export const getMock = async (req, res, next) => {
  */
 export const getMocks = async (req, res, next) => {
   // Connecting to mongoDB
-  connectDB();
+  // connectDB();
 
   try {
     Mock.find()
