@@ -15,7 +15,7 @@ import UserRoute from "./routes/user.js";
 
 // Middleware from Clerk for protecting the routes
 import { ClerkExpressWithAuth } from "@clerk/clerk-sdk-node";
-import errorHandler from "./utils/error.js";
+// import errorHandler from "./utils/error.js";
 import dbMiddleware from "./config/db-middleware.js";
 
 // Inititalizing App
@@ -53,7 +53,16 @@ app.use(
 app.use("/api/users", ClerkExpressWithAuth(), UserRoute);
 
 // Error handling
-app.use(errorHandler);
+app.use((err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || "Something went wrong!";
+  return res.status(errorStatus).json({
+    success: false,
+    status: errorStatus,
+    message: errorMessage,
+    stack: err.stack,
+  });
+});
 
 //* Serve static assets in production, must be at this location of this file
 if (process.env.NODE_ENV === "production") {
