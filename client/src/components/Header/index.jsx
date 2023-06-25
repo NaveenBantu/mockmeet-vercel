@@ -1,6 +1,7 @@
 import styles from "../Header/styles.module.css";
 import GridViewIcon from "../../../node_modules/@mui/icons-material/GridView";
 // import GridViewIcon from "@mui/icons-material/GridView";
+import { FaSlackHash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import { Heading } from "@chakra-ui/react";
