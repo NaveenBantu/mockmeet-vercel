@@ -38,7 +38,7 @@ app.use(express.json());
 app.use(connectToMongoDB);
 
 // Routes
-app.use("/api/mocks", ClerkExpressWithAuth(), mocksRoute);
+app.use("/api/mocks", mocksRoute);
 app.use(
   "/api/bookinginterviews",
   ClerkExpressWithAuth(),
@@ -73,3 +73,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
+
+export default app;
