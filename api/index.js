@@ -38,7 +38,7 @@ app.use(express.json());
 app.use(connectToMongoDB);
 
 // Routes
-app.use("/api/mocks", ClerkExpressWithAuth(), mocksRoute);
+app.use("/api/mocks", mocksRoute);
 app.use(
   "/api/bookinginterviews",
   ClerkExpressWithAuth(),
